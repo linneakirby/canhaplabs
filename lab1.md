@@ -20,7 +20,7 @@ Third, there was an issue of rotation. The tube used to have macrame cord wrappe
 
 Fourth, the only tape I could find was artists tape, a relatively weak tape meant to temporarily adhere to paper without damaging it. Stronger tape might have helped prevent the issues I had with the tube falling over.
 
-Ultimately, I was able to get the snippers to open and close, but was unable to indirectly provide enough force to actually cut through wire or even paper!
+Ultimately, I was able to get the snippers to open and close, but was unable to indirectly provide enough force to actually cut through wire or even paper! I think if I were able to rework this sketch to make the base sturdier, then I would be able to effectively cut at least thin wire.
 
 ---
 
@@ -45,7 +45,7 @@ In order to store energy, I took a wire spring cat toy and put it in a small pla
 
 I placed my stored energy contraption underneath the leaves of a monstera deliciosa plant and "poorly watered" it. As I had hoped, the leaves acted as a ramp for the water, causing it to drip onto the tissue paper. The tissue paper disintegrated beautifully and the spring launched the bottle cap in a rather lackluster arc onto the ground.
 
-I'm just happy I could get this one in one take; I didn't want to have to clean up too much water!
+I'm happy I could get this one in one take; I didn't want to have to clean up too much water!
 
 ---
 
