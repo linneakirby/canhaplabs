@@ -1,4 +1,5 @@
 theme: jekyll-theme-slate
+baseurl: "/canhaplabs"
 url: "https://linneakirby.com"
 plugins:
   - jekyll-sitemap
