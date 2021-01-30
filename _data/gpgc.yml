@@ -7,5 +7,5 @@ label_color: 666666
 github_application:
   client_id: f98cedf49e004178e445
   code_authenticator: https://canhaplabs.herokuapp.com/authenticate
-  callback_url: http://linneakirby.com/canhaplabs/public/html/gpgc_redirect/index.html
+  callback_url: http://linneakirby.com/canhaplabs/public/html/gpgc_redirect.html
 enable_diagnostics: true
