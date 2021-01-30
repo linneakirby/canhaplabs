@@ -1,3 +1,19 @@
 <head>
-  <link rel="stylesheet" href="{{ site.baseurl }}/public/css/gpgc_styles.css">
+
+  <!-- General Metadata -->
+  <title>{{ page_title }}</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,maximum-scale=2">
+  <meta name="description" content="{{ page_description }}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{{page_url}}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ full_url }}/feed.xml">
+  <link rel="stylesheet" type="text/css" media="screen" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+
+  <!-- Front-End Resources -->
+  <link rel="stylesheet" href="{{site.baseurl}}/public/css/gpgc_styles.css">
+
+  {% seo %}
+
 </head>
