@@ -12,7 +12,7 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="">
   <link rel="alternate" type="application/rss+xml" title="canhaplabs" href="/feed.xml">
-  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=4b9c0f35e85bd7e23a487c82fa6ce01d46554ec6">
+  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=942ab9d0e597d499654ee9988c51577aaf819c26">
 
   <!-- Front-End Resources -->
   <link rel="stylesheet" href="/canhaplabs/public/css/gpgc_styles.css">
@@ -115,7 +115,7 @@
 
 <p>I admit, I may have gone a bit overboard when creating my maze. For full disclosure, I didn’t just make a maze: I made an entire maze loader.</p>
 
-<p>I based my program off of “sketch_4_Wall_Physics.pde” by Steve Ding and Colin Gallacher.</p>
+<p>I based my program off of <code class="language-plaintext highlighter-rouge">sketch_4_Wall_Physics.pde</code> by Steve Ding and Colin Gallacher.</p>
 
 <h4 id="the-maze-file-design">The maze file design</h4>
 
@@ -177,6 +177,8 @@
     </figcaption>
    </figure>
 
+<h4 id="checking-maze-dimensions">Checking maze dimensions</h4>
+
 <p>I realized that the size of the displayed maze was represented by the equations:</p>
 
 <blockquote>
@@ -211,6 +213,8 @@
 
     </figcaption>
    </figure>
+
+<h4 id="representing-walls-internally">Representing walls internally</h4>
 
 <p>I created a class for Wall objects to store basic information like dimensions, location, and color.</p>
 
@@ -260,7 +264,9 @@
     </figcaption>
    </figure>
 
-<p>I created a text file parser to read through the maze text file that creates the player token, the finish objective, and Wall objects that are added to an ArrayList called <code class="language-plaintext highlighter-rouge">wallList</code>. I used inspiration from “sketch_6_Maze_Physics.pde” by Elie Hymowitz, Steve Ding, and Colin Gallacher to create the player token and finish markers.</p>
+<h4 id="parsing-the-text-file">Parsing the text file</h4>
+
+<p>I created a text file parser to read through the maze text file that creates the player token, the finish objective, and Wall objects that are added to an ArrayList called <code class="language-plaintext highlighter-rouge">wallList</code>. I used inspiration from <code class="language-plaintext highlighter-rouge">sketch_6_Maze_Physics.pde</code> by Elie Hymowitz, Steve Ding, and Colin Gallacher to create the player token and finish markers.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Wall</span><span class="o">&gt;</span> <span class="nf">parseTextFile</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">incorrectMazeDimensionsException</span> <span class="o">{</span>
   <span class="n">wallList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Wall</span><span class="o">&gt;();</span>
@@ -326,6 +332,8 @@
     </figcaption>
    </figure>
 
+<h4 id="creating-the-maze">Creating the maze</h4>
+
 <p>Finally, I created a function that loops through <code class="language-plaintext highlighter-rouge">wallList</code> actually creates the maze.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">createMaze</span><span class="o">(</span><span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Wall</span><span class="o">&gt;</span> <span class="n">wallList</span><span class="o">)</span> <span class="kd">throws</span> 
@@ -352,7 +360,11 @@
     </figcaption>
    </figure>
 
-<h3 id="the-final-product">The final product</h3>
+<h4 id="the-full-code-base">The full code base</h4>
+
+<p>The full code base can be found (here on Github)[https://github.com/linneakirby/canhaplabs/tree/main/lab2].</p>
+
+<h3 id="the-finished-product">The finished product</h3>
 
 <p>When run with my maze text file, I get a maze that looks like this:</p>
 
@@ -378,7 +390,17 @@
 
 <p>I originally intended to display a simple “Congratulations!” message, but I lucked into this nauseating effect and liked it so much I decided to keep it.</p>
 
+<p>The full experience:</p>
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/7onDj6SEUXA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<h3 id="final-thoughts">Final thoughts</h3>
+
+<p>I thoroughly enjoyed this lab. I had never experienced this kind of haptic feedback before and had a blast trying out all the examples. I also hadn’t had a chance to play around with a simple game in a while (and I absolutely adore solving puzzles and coming up with algorithms) so I got engrossed in creating my maze loader.</p>
+
+<p>I had my partner and my mom try out my maze, but I don’t think they were as enthralled as I am. I think their lack of reaction is due to the haptic feedback not being the focus of this project. In fact, my mom didn’t even experience the feedback at first; she didn’t bump into any walls until I explicitly instructed her to because, “I guess I’m just too good at the maze!”</p>
+
+<p>I’m definitely looking forward to the next lab and playing with different types of feedback and seeing if I can get a bit more of a response out of people.</p>
 
 
 <div class="gpgc-new-section gpgc-comments-font gpgc-hidden" id="gpgc_all_comments">
