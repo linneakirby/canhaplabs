@@ -12,7 +12,7 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="">
   <link rel="alternate" type="application/rss+xml" title="canhaplabs" href="/feed.xml">
-  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=2f424397640138d135c633815efc7a2f536bac65">
+  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=b3f251a92d0868ffbacafe965fbb405c9dad3cc8">
 
   <!-- Front-End Resources -->
   <link rel="stylesheet" href="/canhaplabs/public/css/gpgc_styles.css">
@@ -193,8 +193,8 @@
 
 <p>When loading in a maze text file, I do a simple check to make sure the dimensions given in the first line of the file times <code class="language-plaintext highlighter-rouge">pixelsPerCentimeter</code> equal the screen dimensions. If not, I throw a custom exception:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">incorrectMazeDimensionsException</span> <span class="kd">extends</span> <span class="nc">Exception</span><span class="o">{</span>
-    <span class="n">incorrectMazeDimensionsException</span><span class="o">(</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">IncorrectMazeDimensionsException</span> <span class="kd">extends</span> <span class="nc">Exception</span><span class="o">{</span>
+    <span class="nc">IncorrectMazeDimensionsException</span><span class="o">(</span>
 			<span class="kt">float</span> <span class="n">expectedW</span><span class="o">,</span> <span class="kt">float</span> <span class="n">expectedH</span><span class="o">,</span> 
 			<span class="kt">int</span> <span class="n">actualW</span><span class="o">,</span> <span class="kt">int</span> <span class="n">actualH</span><span class="o">){</span>
         <span class="kd">super</span><span class="o">(</span><span class="s">"Incorrect maze dimensions! Expected maze of "</span> 
@@ -209,7 +209,7 @@
   <img src="" alt="" />
   
     <figcaption>
-      <em>My custom exception, incorrectMazeDimensionsException.</em>
+      <em>My custom exception, IncorrectMazeDimensionsException.</em>
 
     </figcaption>
    </figure>
@@ -268,7 +268,7 @@
 
 <p>I created a text file parser to read through the maze text file that creates the player token, the finish objective, and Wall objects that are added to an ArrayList called <code class="language-plaintext highlighter-rouge">wallList</code>. I used inspiration from <code class="language-plaintext highlighter-rouge">sketch_6_Maze_Physics.pde</code> by Elie Hymowitz, Steve Ding, and Colin Gallacher to create the player token and finish markers.</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Wall</span><span class="o">&gt;</span> <span class="nf">parseTextFile</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">incorrectMazeDimensionsException</span> <span class="o">{</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Wall</span><span class="o">&gt;</span> <span class="nf">parseTextFile</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IncorrectMazeDimensionsException</span> <span class="o">{</span>
   <span class="n">wallList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Wall</span><span class="o">&gt;();</span>
   <span class="nc">Wall</span> <span class="n">w</span><span class="o">;</span>
   
@@ -285,7 +285,7 @@
      <span class="kt">int</span> <span class="n">mazeH</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">mazeWH</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
      
      <span class="k">if</span><span class="o">(</span><span class="n">mazeW</span> <span class="o">!=</span> <span class="n">worldWidth</span> <span class="o">||</span> <span class="n">mazeH</span> <span class="o">!=</span> <span class="n">worldHeight</span><span class="o">){</span>
-       <span class="k">throw</span> <span class="k">new</span> <span class="nf">incorrectMazeDimensionsException</span><span class="o">(</span>
+       <span class="k">throw</span> <span class="k">new</span> <span class="nf">IncorrectMazeDimensionsException</span><span class="o">(</span>
 			<span class="n">worldWidth</span><span class="o">,</span> <span class="n">worldHeight</span><span class="o">,</span> <span class="n">mazeW</span><span class="o">,</span> <span class="n">mazeH</span><span class="o">);</span>
      <span class="o">}</span>
      
@@ -337,7 +337,7 @@
 <p>Finally, I created a function that loops through <code class="language-plaintext highlighter-rouge">wallList</code> actually creates the maze.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">createMaze</span><span class="o">(</span><span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Wall</span><span class="o">&gt;</span> <span class="n">wallList</span><span class="o">)</span> <span class="kd">throws</span> 
-			<span class="n">incorrectMazeDimensionsException</span><span class="o">{</span>
+			<span class="nc">IncorrectMazeDimensionsException</span><span class="o">{</span>
   
   <span class="nc">FBox</span> <span class="n">wall</span><span class="o">;</span>
   <span class="k">for</span><span class="o">(</span><span class="nc">Wall</span> <span class="n">item</span> <span class="o">:</span> <span class="n">wallList</span><span class="o">){</span>
