@@ -12,7 +12,7 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="">
   <link rel="alternate" type="application/rss+xml" title="canhaplabs" href="/feed.xml">
-  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=14c741629b09fc1f8f55d50631b63fef934337ca">
+  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=4b9c0f35e85bd7e23a487c82fa6ce01d46554ec6">
 
   <!-- Front-End Resources -->
   <link rel="stylesheet" href="/canhaplabs/public/css/gpgc_styles.css">
@@ -96,6 +96,8 @@
 
 <p>My second problem was a strange one: after loading the most basic Processing program (and blasting through a small roadblock where I realized I had to explicitly state in the code which port to use) I still wasn’t receiving any haptic feedback.</p>
 
+<p>Like every good scientist, I panicked upon such unexpected results and swiftly took to the Discord channel.</p>
+
 <figure class="">
   <img src="/canhaplabs/assets/lab2/help-me.png" alt="My panicked conversation in the Discord." />
   
@@ -104,6 +106,279 @@
 
     </figcaption>
    </figure>
+
+<p>Despite being plugged into both the computer and a wall outlet, the Haply refused to produce any haptic feedback until I also plugged my laptop into a wall outlet.</p>
+
+<p>Finally: success!</p>
+
+<h3 id="creating-a-haptic-maze-loader">Creating a haptic maze loader</h3>
+
+<p>I admit, I may have gone a bit overboard when creating my maze. For full disclosure, I didn’t just make a maze: I made an entire maze loader.</p>
+
+<p>I based my program off of “sketch_4_Wall_Physics.pde” by Steve Ding and Colin Gallacher.</p>
+
+<h4 id="the-maze-file-design">The maze file design</h4>
+
+<p>I wanted to be able to create a maze visually in a text file instead of having to think about wall placement in the code itself.</p>
+
+<p>I decided to make the first line represent the width and height of the maze so I could do a simple “eligibility” check within my program. If the maze dimensions don’t match what the program expects, my program throws a custom error (described below).</p>
+
+<p>The rest of the maze text file is a visual representation of the maze:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>=</strong></td>
+      <td>represents a maze border and is ignored by my program</td>
+    </tr>
+    <tr>
+      <td><strong>-</strong></td>
+      <td>represents a horizontal wall</td>
+    </tr>
+    <tr>
+      <td><strong>|</strong></td>
+      <td>represents a vertical wall</td>
+    </tr>
+    <tr>
+      <td><strong>+</strong></td>
+      <td>represents the starting position of the player token</td>
+    </tr>
+    <tr>
+      <td><strong>x</strong></td>
+      <td>represents the finish</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 15
+==============================
+=            |+              =
+=  -----   -----  ------  |  =
+=      |                  |  =
+=----  ------  ------  ----  =
+=              |        |    =
+=  |------|  |---  ---  |  --=
+=  |      |  |      |   |    =
+=  |  --  |     |      ----  =
+=      |  |------------|     =
+=----  |  |      |     |  ---=
+=      |  |  --  |  |  |     =
+=  --------  |   |  |  |-----=
+=            |      |       x=
+==============================
+
+</code></pre></div></div>
+<figure class="">
+  <img src="" alt="" />
+  
+    <figcaption>
+      <em>The maze I came up with.</em>
+
+    </figcaption>
+   </figure>
+
+<p>I realized that the size of the displayed maze was represented by the equations:</p>
+
+<blockquote>
+  <p>world width * pixels per centimeter = screen width</p>
+</blockquote>
+
+<p>and</p>
+
+<blockquote>
+  <p>world height * pixels per centimeter = screen height</p>
+</blockquote>
+
+<p>When loading in a maze text file, I do a simple check to make sure the dimensions given in the first line of the file times <code class="language-plaintext highlighter-rouge">pixelsPerCentimeter</code> equal the screen dimensions. If not, I throw a custom exception:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">incorrectMazeDimensionsException</span> <span class="kd">extends</span> <span class="nc">Exception</span><span class="o">{</span>
+    <span class="n">incorrectMazeDimensionsException</span><span class="o">(</span>
+			<span class="kt">float</span> <span class="n">expectedW</span><span class="o">,</span> <span class="kt">float</span> <span class="n">expectedH</span><span class="o">,</span> 
+			<span class="kt">int</span> <span class="n">actualW</span><span class="o">,</span> <span class="kt">int</span> <span class="n">actualH</span><span class="o">){</span>
+        <span class="kd">super</span><span class="o">(</span><span class="s">"Incorrect maze dimensions! Expected maze of "</span> 
+              <span class="o">+</span> <span class="n">expectedW</span> <span class="o">+</span> <span class="s">" width and "</span>
+              <span class="o">+</span> <span class="n">expectedH</span> <span class="o">+</span> <span class="s">" height but received maze of "</span>
+              <span class="o">+</span> <span class="n">actualW</span> <span class="o">+</span> <span class="s">" width and "</span>
+              <span class="o">+</span> <span class="n">actualH</span> <span class="o">+</span> <span class="s">" height"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<figure class="">
+  <img src="" alt="" />
+  
+    <figcaption>
+      <em>My custom exception, incorrectMazeDimensionsException.</em>
+
+    </figcaption>
+   </figure>
+
+<p>I created a class for Wall objects to store basic information like dimensions, location, and color.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Wall</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kt">float</span> <span class="n">w</span><span class="o">;</span> <span class="c1">// wall width</span>
+  <span class="kd">private</span> <span class="kt">float</span> <span class="n">h</span><span class="o">;</span> <span class="c1">// wall height</span>
+  <span class="kd">private</span> <span class="kt">float</span> <span class="n">x</span><span class="o">;</span> <span class="c1">// x position of top left corner</span>
+  <span class="kd">private</span> <span class="kt">float</span> <span class="n">y</span><span class="o">;</span> <span class="c1">// y position of top left corner</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">c</span><span class="o">;</span>   <span class="c1">// color</span>
+  
+  <span class="kd">public</span> <span class="nf">Wall</span><span class="o">(</span><span class="kt">float</span> <span class="n">w</span><span class="o">,</span> <span class="kt">float</span> <span class="n">h</span><span class="o">,</span> <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">,</span> <span class="kt">int</span> <span class="n">c</span><span class="o">){</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">w</span> <span class="o">=</span> <span class="n">w</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">h</span> <span class="o">=</span> <span class="n">h</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">c</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">float</span> <span class="nf">getW</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">w</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">float</span> <span class="nf">getH</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">h</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">float</span> <span class="nf">getX</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">x</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">float</span> <span class="nf">getY</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">y</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getColor</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">c</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+<span class="o">}</span>
+</code></pre></div></div>
+<figure class="">
+  <img src="" alt="" />
+  
+    <figcaption>
+      <em>My Wall class.</em>
+
+    </figcaption>
+   </figure>
+
+<p>I created a text file parser to read through the maze text file that creates the player token, the finish objective, and Wall objects that are added to an ArrayList called <code class="language-plaintext highlighter-rouge">wallList</code>. I used inspiration from “sketch_6_Maze_Physics.pde” by Elie Hymowitz, Steve Ding, and Colin Gallacher to create the player token and finish markers.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Wall</span><span class="o">&gt;</span> <span class="nf">parseTextFile</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">incorrectMazeDimensionsException</span> <span class="o">{</span>
+  <span class="n">wallList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Wall</span><span class="o">&gt;();</span>
+  <span class="nc">Wall</span> <span class="n">w</span><span class="o">;</span>
+  
+     <span class="nc">String</span><span class="o">[]</span> <span class="n">lines</span> <span class="o">=</span> <span class="n">loadStrings</span><span class="o">(</span><span class="no">FILENAME</span><span class="o">);</span>
+     
+     <span class="k">if</span><span class="o">(</span> <span class="n">lines</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+       <span class="k">throw</span> <span class="k">new</span> <span class="nf">NullPointerException</span><span class="o">(</span>
+			<span class="s">"There is an error with your file!"</span><span class="o">);</span>
+     <span class="o">}</span>
+     
+     <span class="nc">String</span> <span class="n">line</span> <span class="o">=</span> <span class="n">lines</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span> <span class="c1">// height and width of maze</span>
+     <span class="nc">String</span><span class="o">[]</span> <span class="n">mazeWH</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">" "</span><span class="o">);</span>
+     <span class="kt">int</span> <span class="n">mazeW</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">mazeWH</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+     <span class="kt">int</span> <span class="n">mazeH</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">mazeWH</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+     
+     <span class="k">if</span><span class="o">(</span><span class="n">mazeW</span> <span class="o">!=</span> <span class="n">worldWidth</span> <span class="o">||</span> <span class="n">mazeH</span> <span class="o">!=</span> <span class="n">worldHeight</span><span class="o">){</span>
+       <span class="k">throw</span> <span class="k">new</span> <span class="nf">incorrectMazeDimensionsException</span><span class="o">(</span>
+			<span class="n">worldWidth</span><span class="o">,</span> <span class="n">worldHeight</span><span class="o">,</span> <span class="n">mazeW</span><span class="o">,</span> <span class="n">mazeH</span><span class="o">);</span>
+     <span class="o">}</span>
+     
+     <span class="nc">Character</span> <span class="n">c</span><span class="o">;</span>
+     
+     <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">mazeH</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span> <span class="c1">// walls of maze</span>
+       <span class="n">line</span> <span class="o">=</span> <span class="n">lines</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+       <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">mazeW</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+         <span class="n">c</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">j</span><span class="o">);</span>
+         <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">'-'</span><span class="o">){</span>
+           <span class="n">wallList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">Wall</span><span class="o">(</span><span class="mf">1.25</span><span class="o">,</span> <span class="mf">0.75</span><span class="o">,</span> 
+		<span class="n">edgeTopLeftX</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="mf">0.5</span><span class="o">,</span> <span class="n">edgeTopLeftY</span><span class="o">+</span><span class="n">i</span><span class="o">-</span><span class="mf">0.5</span><span class="o">,</span>
+		 <span class="mh">0x000000</span><span class="o">));</span>
+         <span class="o">}</span>
+         
+         <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">'|'</span><span class="o">){</span>
+           <span class="n">wallList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">Wall</span><span class="o">(</span><span class="mf">0.75</span><span class="o">,</span> <span class="mf">1.25</span><span class="o">,</span> 
+		<span class="n">edgeTopLeftX</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="mf">0.5</span><span class="o">,</span> <span class="n">edgeTopLeftY</span><span class="o">+</span><span class="n">i</span><span class="o">-</span><span class="mf">0.5</span><span class="o">,</span>
+		 <span class="mh">0x000000</span><span class="o">));</span>
+         <span class="o">}</span>
+         <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">'x'</span><span class="o">){</span>
+           <span class="n">createMazeEnd</span><span class="o">(</span><span class="n">edgeTopLeftX</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="mf">0.5</span><span class="o">,</span> 
+		<span class="n">edgeTopLeftY</span><span class="o">+</span><span class="n">i</span><span class="o">-</span><span class="mf">0.5</span><span class="o">);</span>
+         <span class="o">}</span>
+         <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">'+'</span><span class="o">){</span>
+           <span class="n">createPlayerToken</span><span class="o">(</span><span class="n">edgeTopLeftX</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="mf">0.5</span><span class="o">,</span>
+		 <span class="n">edgeTopLeftY</span><span class="o">+</span><span class="n">i</span><span class="o">-</span><span class="mf">0.5</span><span class="o">);</span>
+         <span class="o">}</span>
+       <span class="o">}</span>
+       <span class="k">if</span> <span class="o">(</span><span class="no">PRINTMAZE</span><span class="o">)</span> <span class="o">{</span>
+         <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">line</span><span class="o">);</span>
+       <span class="o">}</span>
+     <span class="o">}</span>
+  
+  <span class="k">return</span> <span class="n">wallList</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<figure class="">
+  <img src="" alt="" />
+  
+    <figcaption>
+      <em>My maze text file parser.</em>
+
+    </figcaption>
+   </figure>
+
+<p>Finally, I created a function that loops through <code class="language-plaintext highlighter-rouge">wallList</code> actually creates the maze.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">createMaze</span><span class="o">(</span><span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Wall</span><span class="o">&gt;</span> <span class="n">wallList</span><span class="o">)</span> <span class="kd">throws</span> 
+			<span class="n">incorrectMazeDimensionsException</span><span class="o">{</span>
+  
+  <span class="nc">FBox</span> <span class="n">wall</span><span class="o">;</span>
+  <span class="k">for</span><span class="o">(</span><span class="nc">Wall</span> <span class="n">item</span> <span class="o">:</span> <span class="n">wallList</span><span class="o">){</span>
+    <span class="cm">/* creation of wall */</span>
+    <span class="n">wall</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FBox</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">getW</span><span class="o">(),</span> <span class="n">item</span><span class="o">.</span><span class="na">getH</span><span class="o">());</span>
+    <span class="n">wall</span><span class="o">.</span><span class="na">setPosition</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">getX</span><span class="o">(),</span> <span class="n">item</span><span class="o">.</span><span class="na">getY</span><span class="o">());</span>
+    <span class="n">wall</span><span class="o">.</span><span class="na">setStatic</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="na">getColor</span><span class="o">();</span>
+    <span class="n">wall</span><span class="o">.</span><span class="na">setFill</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+    <span class="n">world</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">wall</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<figure class="">
+  <img src="" alt="" />
+  
+    <figcaption>
+      <em>My maze creation loop.</em>
+
+    </figcaption>
+   </figure>
+
+<h3 id="the-final-product">The final product</h3>
+
+<p>When run with my maze text file, I get a maze that looks like this:</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/lab2/maze-start.png" alt="Layout of my maze." />
+  
+    <figcaption>
+      <em>My maze layout.</em>
+
+    </figcaption>
+   </figure>
+
+<p>Upon reaching the finish marker, the player token will trigger an obnoxious effect:</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/lab2/maze-finish.gif" alt="Reaching the end of my maze triggers an obnoxious display of flying colorful exclamation marks." />
+  
+    <figcaption>
+      <em>My maze’s obnoxious effect when reaching the finish marker.</em>
+
+    </figcaption>
+   </figure>
+
+<p>I originally intended to display a simple “Congratulations!” message, but I lucked into this nauseating effect and liked it so much I decided to keep it.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7onDj6SEUXA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 
 
 <div class="gpgc-new-section gpgc-comments-font gpgc-hidden" id="gpgc_all_comments">
