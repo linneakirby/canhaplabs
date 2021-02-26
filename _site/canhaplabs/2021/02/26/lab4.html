@@ -12,7 +12,7 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="">
   <link rel="alternate" type="application/rss+xml" title="canhaplabs" href="/feed.xml">
-  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=6bd2d21aabe09e3822d28e63d222215f57943838">
+  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=bae973e4959249cf5df48e80099703af2f802920">
 
   <!-- Front-End Resources -->
   <link rel="stylesheet" href="/canhaplabs/public/css/gpgc_styles.css">
@@ -138,7 +138,18 @@
 
 <h3 id="how-does-this-change-the-system">How does this change the system?</h3>
 
+<p>Changing these values makes the end effector act erratically again and requires that I retune the PID controller.</p>
+
+<h3 id="what-happens-if-you-sample-faster-or-slower">What happens if you sample faster or slower?</h3>
+
+<p>If I sample slower, the feedback is less smooth and the visual display is not smooth. Furthermore, there is a noticeable display between randomizing the starting position of the track and when the end effector snaps to it.</p>
+
+<p>If I sample faster, the visual display is much smoother, but the Haply acts more erratically and the PID controller seems like it needs to be retuned. However, if I stabilize it with my hand, it feels like it wants to move significantly smoother.</p>
+
 <h3 id="what-happens-if-its-random">What happens if it’s random?</h3>
+
+<p>If it’s random, it destabilizes the PID controller (especially if it randomly becomes a higher value) and the Haply begins to behave erratically even though the path trajectory has not changed.</p>
+
 
 
 <div class="gpgc-new-section gpgc-comments-font gpgc-hidden" id="gpgc_all_comments">
