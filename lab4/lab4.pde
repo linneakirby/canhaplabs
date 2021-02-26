@@ -1,10 +1,10 @@
 /**
  **********************************************************************************************************************
- * @file       sketch_2_Hello_Wall.pde
- * @author     Steve Ding, Colin Gallacher, Antoine Weill--Duflos
+ * @file       lab4.pde
+ * @author     Steve Ding, Colin Gallacher, Antoine Weill--Duflos, and Linnea Kirby
  * @version    V1.0.0
- * @date       09-February-2021
- * @brief      PID example with random position of a target
+ * @date       26-February-2021
+ * @brief      PID example with random position of a target that follows a path
  **********************************************************************************************************************
  * @attention
  *
@@ -115,8 +115,7 @@ int pathTrajectory = 0; //path shape
 
 float[][] squareEndPoints = new float[4][2];
 float[][] lineEndPoints = new float[2][2];
-int deltaT;
-int speed = 1;
+float speed = .1;
 
 long timesincelastloop;
 
@@ -139,7 +138,6 @@ PFont f;
 /* setup section *******************************************************************************************************/
 void setup(){
   /* put setup code here, run once: */
-  //deltaT = millis();
   
   /* screen size definition */
   size(1000, 700);
@@ -283,7 +281,7 @@ public void RandomPosition(int theValue) {
 
 public void RandomShape(float x, float y) {
   int s = int(random(1));
-  r = random(1);
+  r = random(0, .5);
   
   //set up for multiple shapes
   //if(s == 0):
@@ -378,7 +376,6 @@ void keyPressed() {
 
 /* draw section ********************************************************************************************************/
 void draw(){
-  deltaT = millis() - deltaT;
   /* put graphical code here, runs repeatedly at defined framerate in setup, else default at 60fps: */
   if(renderingForce == false){
     background(255); 
@@ -527,11 +524,27 @@ PShape create_wall(float x1, float y1, float x2, float y2){
   return createShape(LINE, deviceOrigin.x + x1, deviceOrigin.y + y1, deviceOrigin.x + x2, deviceOrigin.y+y2);
 }
 
+Boolean pos = true;
+float amount;
 void updateTargetPoisiton(){
-  if(pathTrajectory == 0){ //line
-    xr = 0;
-    yr = 0;
+  if(pathTrajectory == 0) { //line
+    if(xr >= .5 || yr >= .5){
+      pos = false;
+    }
+    else if(xr <= -.5 || yr <= -.5){
+      pos = true;
+    }
+    if(pos){
+      xr += .05*speed;
+      yr += .05*speed;
+    }
+    else{
+      xr -= .05*speed;
+      yr -= .05*speed;
+    }
   }
+  
+  
 }
 
 
