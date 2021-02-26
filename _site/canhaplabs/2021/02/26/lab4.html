@@ -12,7 +12,7 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="">
   <link rel="alternate" type="application/rss+xml" title="canhaplabs" href="/feed.xml">
-  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=faf3f1df20ca0246ba9ef0919b77f4c81a126c86">
+  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=6bd2d21aabe09e3822d28e63d222215f57943838">
 
   <!-- Front-End Resources -->
   <link rel="stylesheet" href="/canhaplabs/public/css/gpgc_styles.css">
@@ -107,9 +107,11 @@
 <p>These values for me seem to create a relatively stable system:</p>
 
 <blockquote>
-  <p>P ≈ 0.25
-I ≈ 0.14
-D ≈ 0.84</p>
+  <p>P ≈ 0.19</p>
+
+  <p>I ≈ 0.06</p>
+
+  <p>D ≈ 0.84</p>
 </blockquote>
 
 <p>Note: I found that I have to gently keep my hand on the end effector when I change the target position, otherwise the Haply moves too fast and breaks!</p>
@@ -120,7 +122,17 @@ D ≈ 0.84</p>
 
 <h3 id="what-happens-when-you-hold-the-handle">What happens when you hold the handle?</h3>
 
+<p>When I hold the handle, the end effector feels like it moves smoothly along the track. When it hits an end point, it feels like it hits a wall and smoothly changes course. When I change the position of the target, the end effector smoothly snaps to the new starting position and begins following its new path.</p>
+
+<p>Source code can be found <a href="https://github.com/linneakirby/canhaplabs/tree/main/lab4">here</a>.</p>
+
 <h3 id="how-is-it-affected-by-the-pid-parameters">How is it affected by the PID parameters?</h3>
+
+<p>With just a P controller, the end effector moves somewhat jerkily at low values, and becomes jittery at high values. Furthermore, when I change the start position of the track, the end effector overshoots and oscillates noisily several times before stabilizing (at low P values).</p>
+
+<p>With a PD controller, the end effector moves somewhat smoother, though it still jerks and oscillates when I create a new random starting position for the track. The oscillation now happens on only part of the track and is at a quicker frequency.</p>
+
+<p>With a PID controller, the end effector moves smoothly and snaps to the new starting position when I randomize the track.</p>
 
 <h2 id="5-play-with-the-controller-update-rates-and-with-introducing-delays">5. Play with the controller update rates, and with introducing delays.</h2>
 
