@@ -19,7 +19,6 @@ import java.util.concurrent.*;
 import controlP5.*;
 /* end library imports *************************************************************************************************/  
 
-
 /* scheduler definition ************************************************************************************************/ 
 private final ScheduledExecutorService scheduler      = Executors.newScheduledThreadPool(1);
 /* end scheduler definition ********************************************************************************************/ 
@@ -81,6 +80,7 @@ PVector           deviceOrigin                        = new PVector(0, 0);
 final int         worldPixelWidth                     = 1000;
 final int         worldPixelHeight                    = 650;
 
+
 float x_m,y_m;
 
 // used to compute the time difference between two loops for differentiation
@@ -115,7 +115,7 @@ int pathTrajectory = 0; //path shape
 
 float[][] squareEndPoints = new float[4][2];
 float[][] lineEndPoints = new float[2][2];
-float speed = .1;
+
 
 long timesincelastloop;
 
@@ -124,6 +124,8 @@ long timetaken= 0;
 
 // set loop time in usec (note from Antoine, 500 is about the limit of my computer max CPU usage)
 int looptime = 500;
+
+float trackspeed = .1;
 
 
 /* graphical elements */
@@ -203,27 +205,47 @@ void setup(){
                     .setFont(createFont("Georgia",20))
                     ;  
   cp5.addSlider("looptime")
-     .setPosition(10,450)
+     .setPosition(10,445)
      .setWidth(200)
      .setRange(250,4000) // values can range from big to small as well
      .setValue(500)
      .setNumberOfTickMarks(16)
      .setSliderMode(Slider.FLEXIBLE)
      ;
+     
+  cp5.addTextlabel("Track speed")
+                    .setText("Track speed")
+                    .setPosition(0,455)
+                    .setColorValue(color(255,0,0))
+                    .setFont(createFont("Georgia",20))
+                    ;  
+  cp5.addSlider("trackspeed")
+     .setPosition(10,480)
+     .setWidth(200)
+     .setRange(0,.5) // values can range from big to small as well
+     .setValue(.1)
+     .setNumberOfTickMarks(16)
+     .setSliderMode(Slider.FLEXIBLE)
+     ;
   cp5.addButton("RandomPosition")
      .setValue(0)
      .setPosition(10,500)
-     .setSize(200,50)
+     .setSize(200,40)
      ;
   cp5.addButton("ResetIntegrator")
      .setValue(0)
-     .setPosition(10,560)
-     .setSize(200,50)
+     .setPosition(10,550)
+     .setSize(200,40)
      ;
   cp5.addButton("ResetDevice")
      .setValue(0)
-     .setPosition(10,620)
-     .setSize(200,50)
+     .setPosition(10,600)
+     .setSize(200,40)
+     ;
+  cp5.addButton("RandomLoopTime")
+     .setValue(500)
+     .setPosition(10,650)
+     .setSize(200,40)
      ;
 
   /* device setup */
@@ -277,6 +299,11 @@ public void RandomPosition(int theValue) {
     yr = random(-0.5,0.5);
 
     RandomShape(xr, yr);
+}
+
+public void RandomLoopTime(int theValue) {
+  looptime = int(random(250,4000));
+  cp5.get("looptime").setValue(looptime);
 }
 
 public void RandomShape(float x, float y) {
@@ -535,12 +562,12 @@ void updateTargetPoisiton(){
       pos = true;
     }
     if(pos){
-      xr += .05*speed;
-      yr += .05*speed;
+      xr += .05*trackspeed;
+      yr += .05*trackspeed;
     }
     else{
-      xr -= .05*speed;
-      yr -= .05*speed;
+      xr -= .05*trackspeed;
+      yr -= .05*trackspeed;;
     }
   }
   
