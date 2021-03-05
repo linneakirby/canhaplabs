@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+
+  <!-- General Metadata -->
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,maximum-scale=2">
+  <meta name="description" content="">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="">
+  <link rel="alternate" type="application/rss+xml" title="canhaplabs" href="/feed.xml">
+  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=84c477c794f753c61b91c80f5382f976d80e955a">
+
+  <!-- Front-End Resources -->
+  <link rel="stylesheet" href="/canhaplabs/public/css/gpgc_styles.css">
+
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>project iteration 1 | canhaplabs</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="project iteration 1" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Project Iteration 1" />
+<meta property="og:description" content="Project Iteration 1" />
+<link rel="canonical" href="https://linneakirby.com/canhaplabs/project/2021/03/05/project-iteration-1.html" />
+<meta property="og:url" content="https://linneakirby.com/canhaplabs/project/2021/03/05/project-iteration-1.html" />
+<meta property="og:site_name" content="canhaplabs" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-05T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="project iteration 1" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","headline":"project iteration 1","dateModified":"2021-03-05T00:00:00-05:00","datePublished":"2021-03-05T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://linneakirby.com/canhaplabs/project/2021/03/05/project-iteration-1.html"},"description":"Project Iteration 1","url":"https://linneakirby.com/canhaplabs/project/2021/03/05/project-iteration-1.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+</head>
+
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          
+            <a id="forkme_banner" href="https://github.com/linneakirby/canhaplabs">View on GitHub</a>
+          
+
+          <h1 id="project_title">canhaplabs</h1>
+          <h2 id="project_tagline"></h2>
+
+          
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1 id="project-iteration-1">Project Iteration 1</h1>
+
+<h2 id="this-iteration-goals">This Iteration Goals</h2>
+
+<p>Our goal for the first iteration of the project was threefold:</p>
+
+<ol>
+  <li>
+    <p>Create a basic interface for coloring that allows the user to engage and disengage with a coloring mode, move between bounded areas, switch colors, and change brush tips (Linnea)</p>
+  </li>
+  <li>
+    <p>Explore different methods of interacting with walls (Marco)</p>
+  </li>
+  <li>
+    <p>Explore different textures to color on, i.e. different “paper” textures, and to color with, i.e. different “material” textures (Preeti)</p>
+  </li>
+</ol>
+
+<p>Since we had three discrete goals, we split said goals up amongst ourselves (assignments are noted in parentheses).</p>
+
+<h2 id="technical-approach-and-findings">Technical Approach and Findings</h2>
+
+<p>After discussing with Marco and Preeti, we decided to use my <a href="/canhaplabs/2021/02/05/lab2.html">maze generator from Lab 2</a> as a starting point for our coloring interface.</p>
+
+<h3 id="preeti---texture-explorations">Preeti - texture explorations</h3>
+
+<p>Preeti created a simple layout and began playing around with using images as visual brush textures. She originally had some trouble with the canvas not recording the <code class="language-plaintext highlighter-rouge">playerToken</code>’s movements, but after some trial and error realized that the issue was redrawing the while background every draw() cycle.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-1/simple-layout.png" alt="Preeti's simple layout." />
+  
+    <figcaption>
+      <em>Preeti’s .txt file for my maze loader.</em>
+
+    </figcaption>
+   </figure>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-1/texture-buttons.png" alt="The generated result with texture brush options." />
+  
+    <figcaption>
+      <em>Preeti added several options for texture brushes.</em>
+
+    </figcaption>
+   </figure>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-1/art.png" alt="Art made by Preeti." />
+  
+    <figcaption>
+      <em>Preeti created some art with the brushes she created.</em>
+
+    </figcaption>
+   </figure>
+
+<p>Preeti then began exploring different haptic texture options that could be used for both background texture and drawing texture.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-1/preeti.gif" alt="Preeti's texture explorations." />
+  
+    <figcaption>
+      <em>Some of the textures Preeti explored with a slider for density.</em>
+
+    </figcaption>
+   </figure>
+
+<p>During another group meeting, we brainstormed several texture ideas for Preeti to continue her explorations.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-1/texture-ideas.png" alt="Different ideas for textures." />
+  
+    <figcaption>
+      <em>Some texture ideas we brainstormed as a team.</em>
+
+    </figcaption>
+   </figure>
+
+<h3 id="marco---wall-interaction-explorations">Marco - wall interaction explorations</h3>
+
+<p>Marco meanwhile began playing with how to get the Haply to interact with walls. We did not want interacting with walls to feel jarring, so Marco explored a few different options for mitigating the harshness.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-1/marco.gif" alt="Marco's wall exploration." />
+  
+    <figcaption>
+      <em>One of Marco’s explorations where the level of damping increases when you get close to a wall.</em>
+
+    </figcaption>
+   </figure>
+
+<p>Marco originally explored keeping track of the closest wall to the <code class="language-plaintext highlighter-rouge">playerToken</code> at all times, but decided that involved too many calculations. He realized that adding a halo around either the <code class="language-plaintext highlighter-rouge">playerToken</code> or the walls could be more effective and began exploring that route instead.</p>
+
+<p>During another group meeting, we brainstormed several wall interaction ideas for Marco to continue his explorations.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-1/wall-ideas.png" alt="Different ideas for wall interaction." />
+  
+    <figcaption>
+      <em>Some wall interaction ideas we brainstormed as a team.</em>
+
+    </figcaption>
+   </figure>
+
+<h3 id="linnea---interface-explorations">Linnea - interface explorations</h3>
+
+<h4 id="planning">Planning</h4>
+
+<p>I began by using the 10 x 10 method I learned in the HCI class I took last semester to brainstorm some interface interaction ideas.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-1/10x10.png" alt="My 10x10 ideas." />
+  
+    <figcaption>
+      <em>The 10 ideas I came up with in 10 minutes.</em>
+
+    </figcaption>
+   </figure>
+
+<p>Many of my ideas were infeasible or overly complicated, but a few ideas seemed promising, such as playing with key bindings and being able to pass through walls somehow.</p>
+
+<h4 id="toggling-keyboard-interactions">Toggling keyboard interactions</h4>
+
+<p>I decided to start simple and use keyboard interactions to trigger different events. I used Processing’s built-in <code class="language-plaintext highlighter-rouge">KeyPressed()</code> function to set up my keyboard shortcuts:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">keyPressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="sc">' '</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// pressing spacebar makes walls flexible</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">isDrawingModeEngaged</span><span class="o">())</span> <span class="o">{</span>
+      <span class="n">disengageDrawingMode</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+      <span class="n">engageDrawingMode</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="sc">'c'</span> <span class="o">||</span> <span class="n">key</span> <span class="o">==</span> <span class="sc">'C'</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// pressing c changes to a random colour</span>
+    <span class="n">setDrawingColor</span><span class="o">((</span><span class="kt">int</span><span class="o">)</span><span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">));</span>
+  <span class="o">}</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="sc">'v'</span> <span class="o">||</span> <span class="n">key</span> <span class="o">==</span> <span class="sc">'V'</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// pressing v changes to a random shape</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="o">(</span><span class="n">shape</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">%</span> <span class="o">(</span><span class="no">NUM_SHAPES</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>I set the spacebar to toggle a coloring mode on and off, ‘c’ to randomly change the color, and ‘v’ to swap between a circle and a square brush tip.</p>
+
+<h4 id="indicating-mode">Indicating mode</h4>
+
+<p>To visually indicate which mode the user is in, I wanted to change the wall color to a bright green when coloring mode is disengaged. I used a HashMap to link the internal Wall representation of each wall with the visual FBox representation. When the spacebar is pressed, I loop through the ArrayList of Wall objects, get the FBox representation from the HashMap, and set the color to the desired color (bright green or black depending on what mode is engaged):</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">setWallFlexibility</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">flexibility</span><span class="o">,</span> <span class="kt">int</span> <span class="n">wallColor</span><span class="o">)</span> <span class="o">{</span>
+  <span class="nc">FBox</span> <span class="n">wallInWorld</span><span class="o">;</span>
+  <span class="k">for</span> <span class="o">(</span><span class="nc">Wall</span> <span class="n">item</span> <span class="o">:</span> <span class="n">wallList</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">wallInWorld</span> <span class="o">=</span> <span class="n">wallToWorldList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
+    <span class="n">wallInWorld</span><span class="o">.</span><span class="na">setSensor</span><span class="o">(</span><span class="n">flexibility</span><span class="o">);</span>
+    <span class="n">wallInWorld</span><span class="o">.</span><span class="na">setFillColor</span><span class="o">(</span><span class="n">wallColor</span><span class="o">);</span>
+    <span class="n">wallInWorld</span><span class="o">.</span><span class="na">setStrokeColor</span><span class="o">(</span><span class="n">wallColor</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="exploring-brush-shape-and-color">Exploring brush shape and color</h4>
+
+<p>I decided to disable Preeti’s texture explorations for the moment. I liked the idea of visual texture as part of the brush options, but I thought it would be easier to work with basic shapes as I explored changing the brush color. Instead of attaching images to the HVirtualCoupling itself, I used the <code class="language-plaintext highlighter-rouge">playerToken</code> position to draw an object of the desired shape at the same position. I created two basic brush options for coloring mode – a circle and a square drawing tool – and a cursor for when coloring mode is disengaged:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">drawCursor</span><span class="o">(</span><span class="nc">PGraphics</span> <span class="n">layer</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">layer</span><span class="o">.</span><span class="na">ellipse</span><span class="o">(</span><span class="n">playerToken</span><span class="o">.</span><span class="na">getAvatarPositionX</span><span class="o">()*</span><span class="mi">40</span><span class="o">,</span> <span class="n">playerToken</span><span class="o">.</span><span class="na">getAvatarPositionY</span><span class="o">()*</span><span class="mi">40</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+  <span class="n">world</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">drawCircle</span><span class="o">(</span><span class="nc">PGraphics</span> <span class="n">layer</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">layer</span><span class="o">.</span><span class="na">ellipse</span><span class="o">(</span><span class="n">playerToken</span><span class="o">.</span><span class="na">getAvatarPositionX</span><span class="o">()*</span><span class="mi">40</span><span class="o">,</span> <span class="n">playerToken</span><span class="o">.</span><span class="na">getAvatarPositionY</span><span class="o">()*</span><span class="mi">40</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">20</span><span class="o">);</span>
+  <span class="n">world</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">drawSquare</span><span class="o">(</span><span class="nc">PGraphics</span> <span class="n">layer</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">layer</span><span class="o">.</span><span class="na">rect</span><span class="o">(</span><span class="n">playerToken</span><span class="o">.</span><span class="na">getAvatarPositionX</span><span class="o">()*</span><span class="mi">40</span><span class="o">-</span><span class="mi">10</span><span class="o">,</span> <span class="n">playerToken</span><span class="o">.</span><span class="na">getAvatarPositionY</span><span class="o">()*</span><span class="mi">40</span><span class="o">-</span><span class="mi">10</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">20</span><span class="o">);</span>
+  <span class="n">world</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>I also created six color swatches and a color mixer swatch at the bottom right of the screen. I do not want to rely on keyboard shortcuts long term, so I thought it would make more sense for the user to “dip their brush” into “buckets” to add or subtract red, green, and blue. The color mixer swatch updates the mixed color in real time.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-1/color-swatches.png" alt="My color swatch setup." />
+  
+    <figcaption>
+      <em>Dipping into the desaturated shade will subtract the corresponding color, while dipping into the saturated shade will add the corresponding color. The bar at the bottom shows the currently mixed color.</em>
+
+    </figcaption>
+   </figure>
+
+<h4 id="creating-layers">Creating layers</h4>
+
+<p>One big issue I ran into was figuring out how to save the coloring trails while not saving the cursor trails.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-1/cursor-trails.gif" alt="The cursor leaving a trail." />
+  
+    <figcaption>
+      <em>The bane of my existence for two days straight.</em>
+
+    </figcaption>
+   </figure>
+
+<p>While it was relatively simple to figure out how to change colors and place shapes at the <code class="language-plaintext highlighter-rouge">playerToken</code>’s position, I struggled with helping the program discriminate what to save. I eventually figured out that I needed to create drawing layers!</p>
+
+<h5 id="processing-frustrations-a-short-aside">Processing frustrations: a short aside</h5>
+
+<p>One of my biggest frustrations with Processing is that by attempting to simplify programming, the developers have ended up obfuscating some potentially important information. In my case, the obfuscated information was that the default canvas that pixels get recorded to is called <code class="language-plaintext highlighter-rouge">g</code>! Any time a Processing-specific method such as <code class="language-plaintext highlighter-rouge">background(&lt;color&gt;)</code> is called, it affects <code class="language-plaintext highlighter-rouge">g</code>. The secret I learned is that these methods can also affect other layers, so if you have another layer called <code class="language-plaintext highlighter-rouge">topLayer</code>, then <code class="language-plaintext highlighter-rouge">topLayer.background(&lt;color&gt;)</code> changes the background of <code class="language-plaintext highlighter-rouge">topLayer</code> instead of <code class="language-plaintext highlighter-rouge">g</code>!</p>
+
+<h5 id="layers-upon-layers">Layers upon layers</h5>
+
+<p>I decided I needed three layers (ordered top to bottom):</p>
+
+<ol>
+  <li>a layer to display the cursor every time coloring mode is toggled off</li>
+  <li>a layer to incrementally color on every time coloring mode is toggled on</li>
+  <li>a layer to white-out and load the accumulated color onto each draw cycle</li>
+</ol>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-1/layer-explanation.png" alt="Drawing the layers." />
+  
+    <figcaption>
+      <em>My attempt at drawing how I set up the layers.</em>
+
+    </figcaption>
+   </figure>
+
+<p>I created an array of layers, with <code class="language-plaintext highlighter-rouge">g</code> as the 0th layer. Each draw cycle, I set <code class="language-plaintext highlighter-rouge">g</code>’s background to white so as to remove any cursor trails, and load the image from <code class="language-plaintext highlighter-rouge">layers[1]</code>, the coloring layer. If coloring mode is toggled on, then the current brush is displayed and the color trail is saved to <code class="language-plaintext highlighter-rouge">layers[1]</code>. If coloring mode is toggled off, then the cursor is displayed on <code class="language-plaintext highlighter-rouge">layers[2]</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kt">void</span> <span class="nf">createLayers</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">layers</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">g</span><span class="o">;</span>
+  <span class="n">layers</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">createGraphics</span><span class="o">((</span><span class="kt">int</span><span class="o">)</span><span class="n">worldWidth</span><span class="o">*</span><span class="mi">40</span><span class="o">,</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">worldHeight</span><span class="o">*</span><span class="mi">40</span> <span class="o">+</span> <span class="mi">2</span><span class="o">);</span>
+  <span class="n">layers</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="n">createGraphics</span><span class="o">((</span><span class="kt">int</span><span class="o">)</span><span class="n">worldWidth</span><span class="o">*</span><span class="mi">40</span><span class="o">,</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">worldHeight</span><span class="o">*</span><span class="mi">40</span> <span class="o">+</span> <span class="mi">2</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">g</span><span class="o">.</span><span class="na">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="n">image</span><span class="o">(</span><span class="n">layers</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">isDrawingModeEngaged</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">layers</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">beginDraw</span><span class="o">();</span>
+    <span class="n">layers</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">noStroke</span><span class="o">();</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">c</span> <span class="o">=</span> <span class="n">getDrawingColor</span><span class="o">();</span>
+    <span class="n">layers</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">fill</span><span class="o">(</span><span class="n">color</span><span class="o">(</span><span class="n">c</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="n">c</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="n">c</span><span class="o">[</span><span class="mi">2</span><span class="o">]));</span>
+    <span class="n">drawShape</span><span class="o">(</span><span class="n">layers</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+    <span class="n">layers</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">endDraw</span><span class="o">();</span>
+    <span class="n">image</span><span class="o">(</span><span class="n">layers</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="n">layers</span><span class="o">[</span><span class="mi">2</span><span class="o">].</span><span class="na">beginDraw</span><span class="o">();</span>
+    <span class="n">layers</span><span class="o">[</span><span class="mi">2</span><span class="o">].</span><span class="na">clear</span><span class="o">();</span>
+    <span class="n">layers</span><span class="o">[</span><span class="mi">2</span><span class="o">].</span><span class="na">background</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="n">layers</span><span class="o">[</span><span class="mi">2</span><span class="o">].</span><span class="na">stroke</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="n">drawCursor</span><span class="o">(</span><span class="n">layers</span><span class="o">[</span><span class="mi">2</span><span class="o">]);</span>
+    <span class="n">layers</span><span class="o">[</span><span class="mi">2</span><span class="o">].</span><span class="na">endDraw</span><span class="o">();</span>
+    <span class="n">image</span><span class="o">(</span><span class="n">layers</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">);</span>
+  <span class="o">}</span>
+  <span class="n">world</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="putting-it-all-together">Putting it all together</h4>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-1/linnea.gif" alt="My interface exploration." />
+  
+    <figcaption>
+      <em>The result of my various explorations.</em>
+
+    </figcaption>
+   </figure>
+
+<p>My code can be found <a href="https://github.com/preetivyas/HaptiColour/tree/lkirby">here</a>.</p>
+
+<h2 id="lessons-learned">Lessons Learned</h2>
+
+<p>I think we achieved a significant amount this iteration. I believe Preeti and Marco’s explorations have put us in a good spot to begin putting all the pieces of our design together. Furthermore, I think my accomplishments this iteration have laid the groundwork for augmenting our design.</p>
+
+<p>One of the major lessons I learned this iteration was that sometimes tools that are created in attempts to streamline processes can unintentionally be a hinderance.</p>
+
+<p>I think the biggest obstacles we have moving forward are keeping our design simple and converging towards pleasing textures to interact with. We will need to explore whether it is more pleasing to have a brush texture interacting with a background texture or to have only one of the two. I do not want to end up with an overload of coloring options and texture sensations. At the same time, I would like to keep as many interactions as possible relegated to the Haply so as to not inundate the user with having to remember too many control options. Our stated goal was to create a tool for mindfulness, anxiety reduction, and fine motor skill training and it is important we do not stray too far from this goal by adding in extraneous options.</p>
+
+<h2 id="next-iteration-goals">Next Iteration Goals</h2>
+
+<p>My next iteration goals are to:</p>
+
+<ol>
+  <li>Implement the interaction of touching the color swatch and changing the mixed color. At the moment, only the random color functionality is implemented.</li>
+  <li>Re-add in Preeti’s idea of texture swatches. My current idea is to have a variety of transparent grayscale texture swatches that can be layered over my basic colorful shape brushes.</li>
+  <li>Implement “clear” and “erase” functionality. Also perhaps changing brush size.</li>
+  <li>Explore a “save” functionality. Now that I know how <code class="language-plaintext highlighter-rouge">PGraphics</code> objects work, I think it should be relatively straightforward to save the image on <code class="language-plaintext highlighter-rouge">layers[1]</code> to a file.</li>
+  <li>Begin integrating my interface with what Marco and Preeti have been working on.</li>
+</ol>
+
+
+<div class="gpgc-new-section gpgc-comments-font gpgc-hidden" id="gpgc_all_comments">
+</div>
+
+<div class="gpgc-new-section gpgc-comments-font gpgc-hidden" id="gpgc_no_comments">
+  <p class="gpgc-centered-text">No comments</p>
+</div>
+
+<div class="gpgc-actions gpgc-hidden gpgc-color-theme" id="gpgc_actions">
+  <span class="gpgc-action gpgc-centered-text">
+    <button class="gpgc-large-secondary-button" id="show_comments_button" onclick="showAllComments(CommentsArray)"></button>
+  </span>
+</div>
+
+<div class="gpgc-comment gpgc-comments-font gpgc-color-theme" id="gpgc_new_comment">
+  <div class="gpgc-comment-header">
+    <a id="gpgc_reader_url" href="https://github.com/wireddown/ghpages-ghcomments"><img class="gpgc-avatar" id="gpgc_reader_avatar" src="https://raw.githubusercontent.com/wireddown/ghpages-ghcomments/gh-pages/public/apple-touch-icon-precomposed.png" height="42" /><span id="gpgc_reader_login">You</span></a>
+    <small>today</small>
+    <div class="gpgc-tabs">
+      <button class="gpgc-tab gpgc-text-button" id="write_button">Write</button>
+      <button class="gpgc-tab gpgc-text-button" id="preview_button">Preview</button>
+    </div>
+  </div>
+  <div class="gpgc-new-comment" id="write_div">
+    <div class="gpgc-new-comment-form">
+      <textarea class="gpgc-new-comment-form-textarea" id="new_comment_field" placeholder="Write a comment"></textarea>
+    </div>
+  </div>
+  <div class="gpgc-new-comment gpgc-comment-contents gpgc-hidden" id="preview_div">
+  </div>
+  <div class="gpgc-hidden gpgc-comment-help" id="help_message">
+  </div>
+  <div class="gpgc-new-comment-actions">
+    <button class="gpgc-normal-primary-button gpgc-text-button" id="login_button" onclick="loginToGitHub()"><strong>Login to GitHub</strong></button>
+    <button class="gpgc-normal-primary-button gpgc-text-button gpgc-hidden" id="submit_button" onclick="postComment()"><strong>Submit</strong></button>
+  </div>
+</div>
+
+<div class="gpgc-new-section gpgc-comments-font gpgc-hidden" id="gpgc_disabled">
+  <p class="gpgc-centered-text">Comments are closed</p>
+</div>
+
+<div class="gpgc-new-section gpgc-comments-font gpgc-help-error gpgc-hidden" id="gpgc_reader_error">
+</div>
+
+<div class="gpgc_last_div">
+</div>
+
+<script type="text/javascript" src="/canhaplabs/public/js/gpgc_core.js"></script>
+
+<script>
+  window.addEventListener("error", onError);
+  function onError(error) {
+    var errorMessage = "<h3><strong>gpgc</strong> Error: Global Exception</h3>";
+    errorMessage += "<p><dl><dt>Error</dt><dd>" + error.message + "</dd><dt>URL</dt><dd>" + error.filename + "</dd><dt>Line</dt><dd>" + error.lineno + "</dd><dt>Column</dt><dd>" + error.colno + "</dd></dl></p>"
+    showGeneralHelp(errorMessage);
+  }
+</script>
+
+<script>
+  var gpgc = {
+    new_comments_disabled: new Boolean(false).valueOf() || new Boolean().valueOf(),
+    site_url: "https://linneakirby.com",
+    page_path: "_posts/2021-03-05-project-iteration-1.md",
+    issue_title: "project iteration 1",
+    repo_id: "linneakirby/canhaplabs",
+    use_show_action: false,
+    github_application_client_id: "f98cedf49e004178e445",
+    github_application_code_authenticator_url: "https://canhaplabs.herokuapp.com/authenticate/",
+    github_application_login_redirect_url: "http://linneakirby.com/canhaplabs/public/html/gpgc_redirect.html",
+    enable_diagnostics: true,
+  };
+
+  gpgc_main();
+</script>
+
+
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        
+        <p class="copyright">canhaplabs maintained by <a href="https://github.com/linneakirby">linneakirby</a></p>
+        
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+  </body>
+</html>
