@@ -24,7 +24,7 @@ After discussing with Marco and Preeti, we decided to use my [maze generator fro
 
 ### Preeti - texture explorations
 
-Preeti created a simple layout and began playing around with using images as visual brush textures. She originally had some trouble with the canvas not recording the `playerToken`'s movements, but after some trial and error realized that the issue was redrawing the while background every draw() cycle. 
+Preeti created a simple layout and began playing around with using images as visual brush textures. She originally had some trouble with the canvas not recording the `playerToken`'s movements, but after some trial and error realized that the issue was redrawing the whole background every `draw()` cycle. 
 
 {% include figure image_path="/assets/project-iteration-1/simple-layout.png" alt="Preeti's simple layout." caption="_Preeti's .txt file for my maze loader._" %}
 
