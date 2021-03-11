@@ -22,7 +22,8 @@ import controlP5.*;
 /* end library imports *************************************************************************************************/
 
 /* user-set parameters ***********/
-public final boolean DEBUG = true;
+public final boolean DEBUG = false;
+public final boolean DEBUGMISLEAD = false;
 /* end user-set parameters **********/
 
 /* scheduler definition ************************************************************************************************/
@@ -85,6 +86,7 @@ PImage            haplyAvatar;
 
 ControlP5 cp5;
 Boolean mislead = false;
+float[][] positionArr = new float[2][2];
 /* end elements definition *********************************************************************************************/
 
 
@@ -129,10 +131,16 @@ void setup() {
   world               = new FWorld();
 
 
+  float[] xyArr = new float[2];
+  float x = edgeTopLeftX+worldWidth/2;
+  float y = edgeTopLeftY+2;
   /* Haptic Tool Initialization */
   s                   = new HVirtualCoupling((1)); 
-  s.h_avatar.setDensity(4);  
-  s.init(world, edgeTopLeftX+worldWidth/2, edgeTopLeftY+2); 
+  s.h_avatar.setDensity(4);
+  s.init(world, x, y); 
+  
+  positionArr[0] = new float[] { x, y };
+  positionArr[1] = new float[] {x, y};
 
 
   /* If you are developing on a Mac users must update the path below 
@@ -168,21 +176,37 @@ void setup() {
 }
 /* end setup section ***************************************************************************************************/
 
-float[] positionArr = new float[2];
+float lastMillis = millis();
 
 /* draw section ********************************************************************************************************/
 void draw() {
   /* put graphical code here, runs repeatedly at defined framerate in setup, else default at 60fps: */
+  if (millis() - lastMillis >= 100) {
+    positionArr = checkPosition(positionArr);
+    if (DEBUGMISLEAD) {
+      System.out.println("Position Array: {" + positionArr[0][0] + ", " + positionArr[0][1] + "}, {" 
+        + positionArr[1][0] + ", " + positionArr[1][1] + "}");
+      System.out.println("Mislead? " + mislead);
+    }
+    lastMillis = millis();
+  }
+
+
+
   if (renderingForce == false) {
     background(255);
-    
-    if(mislead){
-     positionArr = checkPosition(positionArr);
-     
+    if (mislead) {
+      if (checkPassThroughWall(positionArr)) {
+        wall.setSensor(true);
+        wall.setFillColor(color(0, 255, 0));
+      } else {
+        wall.setSensor(false);
+        wall.setFillColor(color(0, 0, 0));
+      }
     }
-    
-    
-    
+
+
+
     world.draw();
   }
 }
@@ -227,7 +251,30 @@ void controlEvent(CallbackEvent event) {
   }
 }
 
-void checkDirection(
+private Boolean checkPassThroughWall(float[][] positionArr) {
+  // if moved from left to right
+  if (positionArr[1][0] - positionArr[0][0] < 0f) {
+    return true;
+  }
+  return false;
+}
+
+private float[][] checkPosition(float[][] positionArr) {
+  //AvatarPosition or ToolPosition?
+  float x = s.getAvatarPositionX();
+  float y = s.getAvatarPositionY();
+  
+  //replace previous position with current position
+  positionArr[0][0] = positionArr[1][0];
+  positionArr[0][1] = positionArr[1][1];
+
+  //update current position
+  positionArr[1][0] = x;
+  positionArr[1][1] = y;
+
+  return positionArr;
+}
+
 
 void beginMislead() {
   createWall();
@@ -239,11 +286,12 @@ void clearMislead() {
 
 void createWall() {
   /* creation of wall */
-  wall                   = new FBox(width, 0.5);
+  wall                   = new FBox(width, 0.1);
   wall.setPosition(edgeTopLeftX, edgeTopLeftY+2*worldHeight/3.0);
   wall.setStatic(true);
   wall.setFill(0, 0, 0);
   world.add(wall);
+  positionArr = checkPosition(positionArr);
 }
 
 void hapticSimulationStep() {
