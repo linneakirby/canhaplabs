@@ -12,7 +12,7 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="">
   <link rel="alternate" type="application/rss+xml" title="canhaplabs" href="/feed.xml">
-  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=ff876e22785e62afabb51095544f6e68ba819d9b">
+  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=1f0576ab62f9c9acf26710f07c0d8e06c71df1b2">
 
   <!-- Front-End Resources -->
   <link rel="stylesheet" href="/canhaplabs/public/css/gpgc_styles.css">
@@ -92,7 +92,18 @@
     </figcaption>
    </figure>
 
-<p>For “misleading,” we thought it would feel jarring to have a wall disappear out from under you and reappear again. Originally, we made the entire wall effectively disappear by creating one <code class="language-plaintext highlighter-rouge">FBox</code> and using the <code class="language-plaintext highlighter-rouge">setSensor()</code> method, but because the method does not work instantaneously</p>
+<p>For “misleading,” we thought it would feel jarring to have the floor disappear out from under you and reappear again. Originally, we made the entire floor effectively disappear by creating one <code class="language-plaintext highlighter-rouge">FBox</code> and using the <code class="language-plaintext highlighter-rouge">setSensor()</code> method, but because the method does not work instantaneously, we switched our approach to creating a sort of “trapdoor.” If the end effector is moving to the right, the fake floor is completely solid, but if the end effector moves to the left, part of the floor “disappears” and allows the end effector through.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">if</span> <span class="o">(</span><span class="n">mislead</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">checkPassThroughWall</span><span class="o">(</span><span class="n">positionArr</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">wall</span><span class="o">[</span><span class="mi">2</span><span class="o">].</span><span class="na">setSensor</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+      <span class="o">}</span> 
+      <span class="k">else</span> <span class="o">{</span>
+        <span class="n">wall</span><span class="o">[</span><span class="mi">2</span><span class="o">].</span><span class="na">setSensor</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+<p><em>The core of the “mislead” haptic metaphor. <code class="language-plaintext highlighter-rouge">checkPassThroughWall()</code> simply checks to see if the end effector has moved left or right.</em></p>
 
 <h3 id="arrogant">“arrogant”</h3>
 
@@ -105,14 +116,38 @@
     </figcaption>
    </figure>
 
+<p>When we discussed “arrogant,” we conceptualized it as “someone taking up space” so we thought we’d translate that into a circle that grows depending on how fast the end effector moves. We wanted to add a bit more texture, so we added an <code class="language-plaintext highlighter-rouge">FBlob</code> around the circle that the end effector is able to pass through. We also made the circle and the blob shrink if the end effector is still or moves slowly enough for a short period, as if it is tiptoeing around the arrogant object pair.</p>
+
 <figure class="">
   <img src="/canhaplabs/assets/lab3/arrogant.png" alt="arrogant beginnings." />
   
     <figcaption>
-      <em>‘Arrogant’ begins looking like an egg.</em>
+      <em>‘Arrogant’ begins looking like a weird egg.</em>
 
     </figcaption>
    </figure>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">if</span> <span class="o">(</span><span class="n">inflate</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">setBlobSize</span><span class="o">(</span><span class="n">arrogance</span><span class="o">,</span> <span class="n">blobSize</span><span class="o">);</span>
+      <span class="n">circle</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="n">circleSize</span><span class="o">);</span>
+      <span class="n">delay</span><span class="o">(</span><span class="mi">50</span><span class="o">);</span>
+      <span class="n">speed</span> <span class="o">=</span> <span class="nc">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">h_avatar</span><span class="o">.</span><span class="na">getVelocityX</span><span class="o">());</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">speed</span> <span class="o">&gt;</span><span class="mi">10</span> <span class="o">&amp;&amp;</span> <span class="n">circleSize</span><span class="o">&lt;</span><span class="mi">20</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">circleSize</span> <span class="o">+=</span> <span class="n">deltaTime</span><span class="o">*</span><span class="mf">0.01</span> <span class="o">+</span> <span class="n">speed</span><span class="o">*</span><span class="mf">0.005</span><span class="o">;</span>
+        <span class="n">blobSize</span> <span class="o">+=</span> <span class="n">deltaTime</span><span class="o">*</span><span class="mf">0.01</span> <span class="o">+</span> <span class="n">speed</span><span class="o">*</span><span class="mf">0.01</span><span class="o">;</span>
+        <span class="n">growDelta</span> <span class="o">=</span> <span class="mi">0</span><span class="n">f</span><span class="o">;</span>
+      <span class="o">}</span> 
+      <span class="k">else</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">growDelta</span> <span class="o">&gt;</span> <span class="mi">50</span> <span class="o">&amp;&amp;</span> <span class="n">circleSize</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">circleSize</span> <span class="o">-=</span> <span class="n">deltaTime</span><span class="o">*</span><span class="mf">0.0005</span><span class="o">;</span>
+          <span class="n">blobSize</span> <span class="o">-=</span> <span class="n">deltaTime</span><span class="o">*</span><span class="mf">0.0005</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">growDelta</span> <span class="o">+=</span> <span class="n">deltaTime</span><span class="o">;</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+</code></pre></div></div>
+<p><em>The core of the “arrogant” haptic metaphor. <code class="language-plaintext highlighter-rouge">deltaTime</code> is the amount of milliseconds that have passed since the last <code class="language-plaintext highlighter-rouge">draw()</code> loop.</em></p>
 
 <h3 id="lethargic">“lethargic”</h3>
 
@@ -125,6 +160,22 @@
     </figcaption>
    </figure>
 
+<p>When we discussed “lethargic,” we were both in agreement that it felt like moving takes a lot of effort. That to us translated nicely into high damping, so for the haptic metaphor we simply created an area with high damping. Simple, yet highly effective!</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">beginLeth</span><span class="o">()</span> <span class="o">{</span>
+
+  <span class="n">createRegion</span><span class="o">();</span>
+  <span class="n">s</span><span class="o">.</span><span class="na">h_avatar</span><span class="o">.</span><span class="na">setDamping</span><span class="o">(</span><span class="mi">800</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">clearLeth</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">leth</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+  <span class="n">world</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">region</span><span class="o">);</span>
+  <span class="n">s</span><span class="o">.</span><span class="na">h_avatar</span><span class="o">.</span><span class="na">setDamping</span><span class="o">(</span><span class="mi">40</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><em>The core to our ‘lethargic’ code.</em></p>
+
 <h3 id="spiky">“spiky”</h3>
 
 <figure class="">
@@ -136,9 +187,73 @@
     </figcaption>
    </figure>
 
-<p>Our vision for “spiky” was to populate the canvas with circles that would “pop” when the end effector touched them. However, we could not figure out a good way to get the popping sensation to feel right.</p>
+<p>Our vision for “spiky” was to populate the canvas with circles that would “pop” when the end effector touched them. However, we could not figure out a good way to get the popping sensation to feel right! When we tried using <code class="language-plaintext highlighter-rouge">setSensor()</code>, the circles would unceremoniously “disappear,” but they wouldn’t feel like popping. We also kept getting <code class="language-plaintext highlighter-rouge">concurrentModificationException</code>s. We eventually decided that we were having enough problems with this haptic metaphor and so scrapped it.</p>
+
+<h2 id="the-code">The code</h2>
+
+<p>The full code base can be found <a href="https://github.com/linneakirby/canhaplabs/tree/main/lab3">here</a>.</p>
 
 <h2 id="guessing-the-haptic-metaphor">Guessing the haptic metaphor</h2>
+
+<p>We were able to get four people of a variety of backgrounds to test out our haptic metaphors. We set up our code with a <code class="language-plaintext highlighter-rouge">final boolean DEBUG</code> that toggles the visibility of all the haptic metaphors.</p>
+
+<p>For Testers 1 and 2, we only got their reactions interacting with the invisible objects. For Testers 3 and 4, we first had them guess the haptic metaphor without being able to see the objects, and then revealed the objects to see if they had any additional comments.</p>
+
+<h3 id="tester-1--student-in-the-class">Tester 1 – Student in the class</h3>
+
+<blockquote>
+  <p>lol, i’d say spring for the first one, cause like there’s some push and pull, push for the second cause there’s this huge force wall in between or something and gluey for the third, cause it feels like im stuck in a honey like substance. or dense or viscous</p>
+</blockquote>
+
+<h3 id="tester-2--non-computer-engineer-grad-student">Tester 2 – Non-computer-engineer grad student</h3>
+
+<blockquote>
+  <p>uh i don’t know… jittery… narrow… and friction. but i am not a good person to ask</p>
+</blockquote>
+
+<h3 id="tester-3--recent-high-school-graduate">Tester 3 – Recent high school graduate</h3>
+
+<p>Without being able to see the objects:</p>
+<blockquote>
+  <p>shimmering, left, and wobbling</p>
+</blockquote>
+
+<p>After seeing the objects:</p>
+
+<p><strong>Misleading</strong></p>
+<blockquote>
+  <p>trapdoor! is it trapdoor?</p>
+</blockquote>
+
+<p><strong>Lethargic</strong></p>
+<blockquote>
+  <p>oh it’s just a blob! that you can pass through?? oh it’s just harder to pass through</p>
+</blockquote>
+
+<h3 id="tester-4--professional-software-engineer">Tester 4 – Professional software engineer</h3>
+
+<p>Without being able to see the objects:</p>
+<blockquote>
+  <p>line. ok fine… pencil?</p>
+
+  <p>the first one is house, the second one is cork and the third one is waterfall or something like that</p>
+</blockquote>
+
+<p>After seeing the objects:</p>
+
+<p><strong>Misleading</strong></p>
+<blockquote>
+  <p>oh it’s like a misleading door!</p>
+</blockquote>
+
+<p><strong>Arrogant</strong></p>
+<blockquote>
+  <p>omg it grows! i don’t like it</p>
+
+  <p>i knew it was an egg!</p>
+</blockquote>
+
+<h2 id="reflection">Reflection</h2>
 
 
 
