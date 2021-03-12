@@ -10,5 +10,7 @@
 
 ### [Lab 2]({{ site.baseurl }}{% post_url 2021-02-05-lab2 %})
 
+### [Lab 3]({{ site.baseurl }}{% post_url 2021-03-12-lab3 %})
+
 ### [Lab 4]({{ site.baseurl }}{% post_url 2021-02-26-lab4 %})
 
