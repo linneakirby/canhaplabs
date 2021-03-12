@@ -1,1 +1,1 @@
-Sitemap: http://localhost:4000/canhaplabs/sitemap.xml
+Sitemap: https://linneakirby.com/canhaplabs/sitemap.xml
