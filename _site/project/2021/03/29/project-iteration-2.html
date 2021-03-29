@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+
+  <!-- General Metadata -->
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,maximum-scale=2">
+  <meta name="description" content="">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="">
+  <link rel="alternate" type="application/rss+xml" title="canhaplabs" href="/feed.xml">
+  <link rel="stylesheet" type="text/css" media="screen" href="/canhaplabs/assets/css/style.css?v=2079647aff83930bc0c64ae2f878b264209c4d45">
+
+  <!-- Front-End Resources -->
+  <link rel="stylesheet" href="/canhaplabs/public/css/gpgc_styles.css">
+
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>project iteration 2 | canhaplabs</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="project iteration 2" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Project Iteration 2" />
+<meta property="og:description" content="Project Iteration 2" />
+<link rel="canonical" href="https://linneakirby.com/canhaplabs/project/2021/03/29/project-iteration-2.html" />
+<meta property="og:url" content="https://linneakirby.com/canhaplabs/project/2021/03/29/project-iteration-2.html" />
+<meta property="og:site_name" content="canhaplabs" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-29T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="project iteration 2" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","headline":"project iteration 2","dateModified":"2021-03-29T00:00:00-04:00","datePublished":"2021-03-29T00:00:00-04:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://linneakirby.com/canhaplabs/project/2021/03/29/project-iteration-2.html"},"description":"Project Iteration 2","url":"https://linneakirby.com/canhaplabs/project/2021/03/29/project-iteration-2.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+</head>
+
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          
+            <a id="forkme_banner" href="https://github.com/linneakirby/canhaplabs">View on GitHub</a>
+          
+
+          <h1 id="project_title">canhaplabs</h1>
+          <h2 id="project_tagline"></h2>
+
+          
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1 id="project-iteration-2">Project Iteration 2</h1>
+
+<h2 id="this-iteration-goals">This Iteration Goals</h2>
+
+<p>Since we are working remotely, we decided to once again create three distinct task lists for the second iteration (assignments are noted in parentheses):</p>
+
+<ol>
+  <li>
+    <p>Improve upon the interface to create a UI almost completely controlled through the Haply and bugfixes. (Linnea)</p>
+  </li>
+  <li>
+    <p>Add texture to the walls and UI elements and collect opinions on texture. (Marco)</p>
+  </li>
+  <li>
+    <p>Integrate the different explorations from Iteration 1, quality assurance testing, and work with Marco to set up a texture testing codebase. (Preeti)</p>
+  </li>
+</ol>
+
+<h2 id="technical-approach-and-findings">Technical Approach and Findings</h2>
+
+<h3 id="preeti---integration-qa-testing-and-setting-up-texture-testing-code">Preeti - integration, QA testing, and setting up texture testing code</h3>
+
+<p>Preeti took our three separate codebases from Iteration 1 and integrated them into one functional codebase. She then tested the integrated code for quality and came up with a list of bugs that she then passed onto me for fixing:</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/cursorOffset.gif" alt="Cursor offsets." />
+  
+    <figcaption>
+      <em>The brush when coloring and the cursor when not coloring were offset.</em>
+
+    </figcaption>
+   </figure>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/whiteBorder.png" alt="White borders." />
+  
+    <figcaption>
+      <em>The brush would not reach the walls and left a white border. Also, switching from coloring mode to not coloring mode when on a wall would leave a streak of color.</em>
+
+    </figcaption>
+   </figure>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/beginningSplotch.png" alt="Splotch of color when beginning." />
+  
+    <figcaption>
+      <em>When first starting the program, the brush would leave a splotch of color.</em>
+
+    </figcaption>
+   </figure>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/notooltip.gif" alt="No indication of the brush when coloring." />
+  
+    <figcaption>
+      <em>There was no indication of brush position when coloring, so the user could lose the brush when filling in an area with one color.</em>
+
+    </figcaption>
+   </figure>
+
+<p>She and Marco then compiled a simple interface of their texture explorations so that we could gather some preliminary feedback on texture.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/textures.png" alt="Texture interface." />
+  
+    <figcaption>
+      <em>Preeti and Marco visually differentiated the textures only by color so as not to influence any testers.</em>
+
+    </figcaption>
+   </figure>
+
+<h3 id="marco---add-texture-to-elements-and-create-a-texture-testing-survey">Marco - add texture to elements and create a texture testing survey</h3>
+
+<p>Marco added a damping effect to the walls of the coloring screen by adding a sensor surrounding the brush like a halo. When the sensor touches a wall, it increases the damping and makes the coloring experience smoother around walls. He also added a honey-like effect to the color picker “buttons” that I added to make it feel like the user is dipping a brush into paint.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/dampingHalo.png" alt="The damping halo." />
+  
+    <figcaption>
+      <em>The damping halo and a slider to test different damping strengths.</em>
+
+    </figcaption>
+   </figure>
+
+<p>He then created a survey to go along with the texture exploration interface so that we could collect some opinions from other students in the class about which textures feel good to color on.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/survey.png" alt="Marco's survey." />
+  
+    <figcaption>
+      <em>The first page of Marco’s survey.</em>
+
+    </figcaption>
+   </figure>
+
+<h3 id="linnea---continuing-ui-and-ux-development">Linnea - continuing UI and UX development</h3>
+
+<h4 id="modifying-the-color-picker">Modifying the color picker</h4>
+
+<p>After speaking with our mentors, I decided to switch the color picker from a “mix it yourself” to a “pick from these six options” color picker. Because users would probably want to color with more than just six colors, I decided to make <code class="language-plaintext highlighter-rouge">ColorPalette</code> and <code class="language-plaintext highlighter-rouge">ColorSwatch</code> classes so that I could save multiple color palettes and users could swap between them:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ColorPalette</span><span class="o">{</span>
+  <span class="kd">public</span> <span class="nc">ColorSwatch</span><span class="o">[]</span> <span class="n">palette</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ColorSwatch</span><span class="o">[</span><span class="mi">6</span><span class="o">];</span>
+  
+  <span class="kd">public</span> <span class="nf">ColorPalette</span><span class="o">(</span><span class="nc">ColorSwatch</span><span class="o">[]</span> <span class="n">p</span><span class="o">){</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">p</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">palette</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="nf">ColorPalette</span><span class="o">(</span><span class="nc">ColorSwatch</span> <span class="n">s0</span><span class="o">,</span> <span class="nc">ColorSwatch</span> <span class="n">s1</span><span class="o">,</span> <span class="nc">ColorSwatch</span> <span class="n">s2</span><span class="o">,</span> <span class="nc">ColorSwatch</span> <span class="n">s3</span><span class="o">,</span> <span class="nc">ColorSwatch</span> <span class="n">s4</span><span class="o">,</span> <span class="nc">ColorSwatch</span> <span class="n">s5</span><span class="o">){</span>
+    <span class="k">this</span><span class="o">(</span><span class="k">new</span> <span class="nc">ColorSwatch</span><span class="o">[]</span> <span class="o">{</span><span class="n">s0</span><span class="o">,</span> <span class="n">s1</span><span class="o">,</span> <span class="n">s2</span><span class="o">,</span> <span class="n">s3</span><span class="o">,</span> <span class="n">s4</span><span class="o">,</span> <span class="n">s5</span><span class="o">});</span>
+  <span class="o">}</span>
+  
+  <span class="c1">//create empty (black) color palette</span>
+  <span class="kd">public</span> <span class="nf">ColorPalette</span><span class="o">(){</span>
+    <span class="k">this</span><span class="o">(</span><span class="k">new</span> <span class="nc">ColorSwatch</span><span class="o">[]</span> <span class="o">{});</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getLength</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="n">palette</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="c1">//returns black if swatch doesn't exist</span>
+  <span class="kd">public</span> <span class="nc">ColorSwatch</span> <span class="nf">getSwatch</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">){</span>
+    <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">palette</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">palette</span><span class="o">[</span><span class="n">index</span><span class="o">];</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">ColorSwatch</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span>
+  
+  <span class="c1">//returns previous color or black if no previous color  </span>
+  <span class="kd">public</span> <span class="nc">ColorSwatch</span> <span class="nf">setSwatch</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">,</span> <span class="nc">ColorSwatch</span> <span class="n">swatch</span><span class="o">){</span>
+    <span class="nc">ColorSwatch</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getSwatch</span><span class="o">(</span><span class="n">index</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">palette</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="n">swatch</span><span class="o">;</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="c1">//returns previous color or black if no previous color</span>
+  <span class="kd">public</span> <span class="nc">ColorSwatch</span> <span class="nf">addSwatch</span><span class="o">(</span><span class="nc">ColorSwatch</span> <span class="n">swatch</span><span class="o">){</span>
+    <span class="nc">ColorSwatch</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getSwatch</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">palette</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">palette</span><span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="na">palette</span><span class="o">.</span><span class="na">length</span><span class="o">]</span> <span class="o">=</span> <span class="n">swatch</span><span class="o">;</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="c1">//removes swatch at index and replaces with black, returns original color or black if no original color</span>
+  <span class="kd">public</span> <span class="nc">ColorSwatch</span> <span class="nf">removeSwatch</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">){</span>
+    <span class="nc">ColorSwatch</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getSwatch</span><span class="o">(</span><span class="n">index</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">palette</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ColorSwatch</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+<span class="o">}</span>
+</code></pre></div></div>
+<p><em>The <code class="language-plaintext highlighter-rouge">ColorPalette</code> object consists of and array of six <code class="language-plaintext highlighter-rouge">ColorSwatch</code> objects and is able to add, set, and remove swatches, keeping a default color of black for any undefined swatches.</em></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ColorSwatch</span><span class="o">{</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">r</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">g</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">b</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">paletteIndex</span><span class="o">;</span>
+  
+  <span class="kd">public</span> <span class="nf">ColorSwatch</span><span class="o">(</span><span class="kt">int</span> <span class="n">r</span><span class="o">,</span> <span class="kt">int</span> <span class="n">g</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">,</span> <span class="kt">int</span> <span class="n">index</span><span class="o">){</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">r</span> <span class="o">=</span> <span class="n">r</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">b</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">paletteIndex</span> <span class="o">=</span> <span class="n">index</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="nf">ColorSwatch</span><span class="o">(</span><span class="kt">int</span> <span class="n">r</span><span class="o">,</span> <span class="kt">int</span> <span class="n">g</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">){</span>
+    <span class="k">this</span><span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">g</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="nf">ColorSwatch</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">c</span><span class="o">){</span>
+    <span class="k">this</span><span class="o">(</span><span class="n">c</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="n">c</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="n">c</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span>
+  
+  <span class="c1">//default to black</span>
+  <span class="kd">public</span> <span class="nf">ColorSwatch</span><span class="o">(){</span>
+   <span class="k">this</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> 
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPaletteIndex</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">){</span>
+    <span class="n">paletteIndex</span> <span class="o">=</span> <span class="n">index</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getPaletteIndex</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="n">paletteIndex</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getRed</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">r</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getGreen</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">g</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getBlue</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">b</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">getColor</span><span class="o">(){</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">ret</span> <span class="o">=</span> <span class="o">{</span><span class="k">this</span><span class="o">.</span><span class="na">r</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">g</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">b</span><span class="o">};</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setColor</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">c</span><span class="o">){</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">r</span> <span class="o">=</span> <span class="n">c</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">g</span> <span class="o">=</span> <span class="n">c</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">b</span> <span class="o">=</span> <span class="n">c</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setColor</span><span class="o">(</span><span class="kt">int</span> <span class="n">r</span><span class="o">,</span> <span class="kt">int</span> <span class="n">g</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">){</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">r</span> <span class="o">=</span> <span class="n">r</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">b</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><em>The <code class="language-plaintext highlighter-rouge">ColorSwatch</code> object consists of a representation of an RGB color and an index in a <code class="language-plaintext highlighter-rouge">ColorPalette</code> object. It is able to get and set itself in a couple different ways just out of convenience.</em></p>
+
+<p>In my opinion, the new and improved color picker feels satisfying to use when in action. I also modified the cursor to change color to match the selected color so the user will not have to look at the bottom of the screen to see the selected color.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/colorPalette.gif" alt="The new color picker." />
+  
+    <figcaption>
+      <em>The color picker in action with multiple palettes.</em>
+
+    </figcaption>
+   </figure>
+
+<h4 id="bugfixes">Bugfixes</h4>
+
+<p>I went through Preeti’s list of bugs and was able to find solutions for all of them.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/bugfixes.gif" alt="Bugfixes." />
+  
+    <figcaption>
+      <em>No matter the background color, the brush is still visible. The brush is also able to color all the way to the edge of the walls. The cursor and the brush are now centered and the user is unable to switch between modes when in the button area or when touching a wall.</em>
+
+    </figcaption>
+   </figure>
+
+<h5 id="finding-the-brush-while-coloring">Finding the brush while coloring</h5>
+
+<p>I added a multi-layer outline around the brush when in coloring mode along with a multi-layer ring in the middle to indicate the center of the brush. I used black and white for the rings so the brush would show up on both dark and light backgrounds.</p>
+
+<h5 id="coloring-up-to-the-edges">Coloring up to the edges</h5>
+
+<p>I realized that the reason the brush was unable to color all the way to the edge of the walls was because the invisible <code class="language-plaintext highlighter-rouge">FCircle</code> attached to the Haply was bigger than the brush itself. I modified the code so that the <code class="language-plaintext highlighter-rouge">HVirtualCoupling</code> representation and the brush representation are always the same size and when one changes size, so does the other.</p>
+
+<h5 id="centering-the-cursor-and-brush">Centering the cursor and brush</h5>
+
+<p>For some reason, Processing’s <code class="language-plaintext highlighter-rouge">width</code> and <code class="language-plaintext highlighter-rouge">height</code> variables give slightly different values than the values <code class="language-plaintext highlighter-rouge">worldWidth</code> and <code class="language-plaintext highlighter-rouge">worldHeight</code> variables multiplied by the <code class="language-plaintext highlighter-rouge">pixelsPerCentimeter</code> variable. The brush was using one set of variables and the cursor was using the other set, so I changed the code so both used one set of variables.</p>
+
+<h5 id="no-more-splotches-of-color-over-the-lines-or-in-the-button-area">No more splotches of color over the lines or in the button area</h5>
+
+<p>I modified the code so that the user is unable to switch to coloring mode when in the button area or when touching a wall so there is no more issue of splotches of color going over the lines or appearing in the toolbar.</p>
+
+<h5 id="starting-the-program-with-a-splotch-of-color">Starting the program with a splotch of color</h5>
+
+<p>I changed the starting setup so that the program starts out of coloring mode. This way, the user can choose where to start coloring, pick a color to begin with, and will not have to deal with a rogue splotch of color.</p>
+
+<h4 id="adding-buttons">Adding buttons</h4>
+
+<p>I added several “buttons” to the UI in the form of <code class="language-plaintext highlighter-rouge">FBox</code> objects that, when touched by the cursor, activate certain effects. I also filled in the background of the toolbar with black to distinguish it from the coloring screen.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/UItoolbar.png" alt="The toolbar." />
+  
+    <figcaption>
+      <em>My new toolbar.</em>
+
+    </figcaption>
+   </figure>
+
+<h5 id="erase">Erase</h5>
+
+<p>Because I didn’t want to deal with saving user motion, I kept the eraser simple by having it switch the brush color to white. Because the canvas background is white, a white brush appears to “erase.”</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/erasing.gif" alt="Erasing." />
+  
+    <figcaption>
+      <em>Erasing.</em>
+
+    </figcaption>
+   </figure>
+
+<h5 id="previous-and-next-palette">Previous and Next Palette</h5>
+
+<p>The previous and next palette buttons decrement and increment, respectively, a variable called <code class="language-plaintext highlighter-rouge">paletteIndex</code> which is modded by the number of palettes to get a valid palette index. The palette is obtained from a list of <code class="language-plaintext highlighter-rouge">ColorPalette</code> objects and loaded into the toolbar.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/changePalette.gif" alt="Changing the palette." />
+  
+    <figcaption>
+      <em>Changing the active palette.</em>
+
+    </figcaption>
+   </figure>
+
+<h5 id="smaller-and-larger-brush">Smaller and Larger Brush</h5>
+
+<p>The smaller and larger brush buttons decrease and increase, respectively, the size of the brush, the <code class="language-plaintext highlighter-rouge">FCircle</code> attached to the Haply, the sensor halo around the brush, and the cursor. At the moment, the brush changes size very slowly, which can be frustrating for the user. I am currently brainstorming ideas to fix this issue.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/smallerLarger.gif" alt="Changing brush size." />
+  
+    <figcaption>
+      <em>Changing the brush size.</em>
+
+    </figcaption>
+   </figure>
+
+<h5 id="save">Save</h5>
+
+<p>The save button saves unique .png files of <code class="language-plaintext highlighter-rouge">layers[0]</code> and <code class="language-plaintext highlighter-rouge">layers[1]</code> to a subfolder called “saved” in the code’s folder each time it is called. Because the filenames are unique, the user can save multiple images each coloring session.</p>
+
+<h5 id="clear">Clear</h5>
+
+<p>The clear button resets the layers and adds a new white background to the layer <code class="language-plaintext highlighter-rouge">g</code>.</p>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/saveClear.gif" alt="Saving and clearing." />
+  
+    <figcaption>
+      <em>Saving and clearing.</em>
+
+    </figcaption>
+   </figure>
+
+<h4 id="setting-up-a-new-and-improved-brush">Setting up a new and improved brush</h4>
+
+<p>In order to create a more nuanced visual painting texture, I needed to set up another set of classes:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">processing.core.PGraphics</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Brush</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kt">float</span> <span class="n">paintAmount</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">paintColor</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">3</span><span class="o">];</span>
+  <span class="kd">private</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Bristle</span><span class="o">&gt;</span> <span class="n">bristles</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Bristle</span><span class="o">&gt;();</span>
+  <span class="kd">private</span> <span class="kt">float</span> <span class="n">scaleFactor</span><span class="o">;</span>
+
+  <span class="kd">public</span> <span class="nf">Brush</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">});</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="nf">Brush</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">paintColor</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">paintAmount</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">scaleFactor</span> <span class="o">=</span> <span class="mi">30</span><span class="n">f</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">changeColor</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">paintColor</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">getColor</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">paintColor</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setScale</span><span class="o">(</span><span class="kt">float</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">scaleFactor</span> <span class="o">=</span> <span class="n">s</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">float</span> <span class="nf">getScale</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">scaleFactor</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addBristle</span><span class="o">(</span><span class="nc">Bristle</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">bristles</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">numBristles</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">bristles</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Bristle</span><span class="o">&gt;</span> <span class="nf">getBristles</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">bristles</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">larger</span><span class="o">(</span><span class="kt">float</span> <span class="n">amount</span><span class="o">){</span>
+    <span class="n">scaleFactor</span> <span class="o">+=</span> <span class="n">amount</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">smaller</span><span class="o">(</span><span class="kt">float</span> <span class="n">amount</span><span class="o">){</span>
+    <span class="n">scaleFactor</span> <span class="o">-=</span> <span class="n">amount</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">scaleFactor</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="n">f</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">scaleFactor</span> <span class="o">=</span> <span class="mi">1</span><span class="n">f</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">paint</span><span class="o">(</span><span class="nc">PGraphics</span> <span class="n">layer</span><span class="o">,</span> <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">layer</span><span class="o">.</span><span class="na">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">scaleFactor</span><span class="o">,</span> <span class="n">scaleFactor</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><em>The <code class="language-plaintext highlighter-rouge">Brush</code> object contains a collection of <code class="language-plaintext highlighter-rouge">Bristle</code> objects, is aware of the color it is using, and has a <code class="language-plaintext highlighter-rouge">paint</code> method.</em></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bristle</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kt">float</span> <span class="n">weight</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="nc">Brush</span> <span class="n">brush</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">index</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+  <span class="kd">private</span> <span class="kt">float</span> <span class="n">opacity</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">float</span> <span class="n">scaleFactor</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="nc">Boolean</span> <span class="n">middleEdge</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+  
+  <span class="kd">public</span> <span class="nf">Bristle</span><span class="o">(</span><span class="kt">float</span> <span class="n">w</span><span class="o">,</span> <span class="nc">Brush</span> <span class="n">b</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">coords</span><span class="o">){</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">weight</span> <span class="o">=</span> <span class="n">w</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">brush</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">index</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">coords</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">index</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">coords</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMiddleEdge</span><span class="o">(</span><span class="nc">Boolean</span> <span class="n">b</span><span class="o">){</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">middleEdge</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="nc">Boolean</span> <span class="nf">isMiddleEdge</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">middleEdge</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><em>The <code class="language-plaintext highlighter-rouge">Bristle</code> object knows where it is in a <code class="language-plaintext highlighter-rouge">Brush</code> object and has its own weight and opacity.</em></p>
+
+<p>My idea is to have a <code class="language-plaintext highlighter-rouge">Brush</code> object consisting of multiple <code class="language-plaintext highlighter-rouge">Bristles</code> that will vary in weight and opacity and will eventually “run out” of paint. At the moment, I have set up my classes but have not yet implemented the more nuanced <code class="language-plaintext highlighter-rouge">paint</code> method. The current <code class="language-plaintext highlighter-rouge">paint</code> method simply draws a circle at the brush position.</p>
+
+<h4 id="putting-it-all-together">Putting it all together</h4>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/screen0.png" alt="Processing art." />
+  
+    <figcaption>
+      <em>A saved coloring image.</em>
+
+    </figcaption>
+   </figure>
+
+<figure class="">
+  <img src="/canhaplabs/assets/project-iteration-2/screen1.png" alt="More processing art." />
+  
+    <figcaption>
+      <em>Another saved coloring image.</em>
+
+    </figcaption>
+   </figure>
+
+<p>The code can be found <a href="https://github.com/preetivyas/HaptiColour/tree/main/Iteration%202/sketch_coloring_space">here</a>.</p>
+
+<h2 id="lessons-learned">Lessons Learned</h2>
+
+<p>I think once again we achieved a significant amount this iteration. Preeti’s quality assurance testing was particularly useful for me to improve upon what I had achieved in iteration 1.</p>
+
+<p>One of the major lessons I learned this iteration was that I am quite good at productive procrastination (ha ha). I was planning on creating the toolbar next iteration, but this iteration I was so nervous about completing the <code class="language-plaintext highlighter-rouge">Brush</code> class <code class="language-plaintext highlighter-rouge">paint</code> method that I ended up creating the entire toolbar!</p>
+
+<p>I think the biggest obstacles we have moving forward is making the entire experience feel good. I am currently concerned that the visual aspect of coloring is overshadowing the haptic experience. I believe user testing is key to fully integrating the different modalities and creating one solid experience.</p>
+
+<h2 id="next-iteration-goals">Next Iteration Goals</h2>
+
+<p>My next iteration goals are to:</p>
+
+<ol>
+  <li>Complete the nuanced brush visual coloring texture.</li>
+  <li>Add a check to make sure the user actually wants to clear instead of automatically clearing.</li>
+  <li>Make it less frustrating to change the brush size.</li>
+  <li>Integrate more haptic effects into the experience so the experience feels more like coloring.</li>
+  <li>Get more feedback from new users to see how we can make the full experience feel calming and pleasant.</li>
+  <li>Get more quality assurance feedback from Preeti and fix any new bugs that crop up.</li>
+  <li>Add more “pages” to color on.</li>
+</ol>
+
+
+<div class="gpgc-new-section gpgc-comments-font gpgc-hidden" id="gpgc_all_comments">
+</div>
+
+<div class="gpgc-new-section gpgc-comments-font gpgc-hidden" id="gpgc_no_comments">
+  <p class="gpgc-centered-text">No comments</p>
+</div>
+
+<div class="gpgc-actions gpgc-hidden gpgc-color-theme" id="gpgc_actions">
+  <span class="gpgc-action gpgc-centered-text">
+    <button class="gpgc-large-secondary-button" id="show_comments_button" onclick="showAllComments(CommentsArray)"></button>
+  </span>
+</div>
+
+<div class="gpgc-comment gpgc-comments-font gpgc-color-theme" id="gpgc_new_comment">
+  <div class="gpgc-comment-header">
+    <a id="gpgc_reader_url" href="https://github.com/wireddown/ghpages-ghcomments"><img class="gpgc-avatar" id="gpgc_reader_avatar" src="https://raw.githubusercontent.com/wireddown/ghpages-ghcomments/gh-pages/public/apple-touch-icon-precomposed.png" height="42" /><span id="gpgc_reader_login">You</span></a>
+    <small>today</small>
+    <div class="gpgc-tabs">
+      <button class="gpgc-tab gpgc-text-button" id="write_button">Write</button>
+      <button class="gpgc-tab gpgc-text-button" id="preview_button">Preview</button>
+    </div>
+  </div>
+  <div class="gpgc-new-comment" id="write_div">
+    <div class="gpgc-new-comment-form">
+      <textarea class="gpgc-new-comment-form-textarea" id="new_comment_field" placeholder="Write a comment"></textarea>
+    </div>
+  </div>
+  <div class="gpgc-new-comment gpgc-comment-contents gpgc-hidden" id="preview_div">
+  </div>
+  <div class="gpgc-hidden gpgc-comment-help" id="help_message">
+  </div>
+  <div class="gpgc-new-comment-actions">
+    <button class="gpgc-normal-primary-button gpgc-text-button" id="login_button" onclick="loginToGitHub()"><strong>Login to GitHub</strong></button>
+    <button class="gpgc-normal-primary-button gpgc-text-button gpgc-hidden" id="submit_button" onclick="postComment()"><strong>Submit</strong></button>
+  </div>
+</div>
+
+<div class="gpgc-new-section gpgc-comments-font gpgc-hidden" id="gpgc_disabled">
+  <p class="gpgc-centered-text">Comments are closed</p>
+</div>
+
+<div class="gpgc-new-section gpgc-comments-font gpgc-help-error gpgc-hidden" id="gpgc_reader_error">
+</div>
+
+<div class="gpgc_last_div">
+</div>
+
+<script type="text/javascript" src="/canhaplabs/public/js/gpgc_core.js"></script>
+
+<script>
+  window.addEventListener("error", onError);
+  function onError(error) {
+    var errorMessage = "<h3><strong>gpgc</strong> Error: Global Exception</h3>";
+    errorMessage += "<p><dl><dt>Error</dt><dd>" + error.message + "</dd><dt>URL</dt><dd>" + error.filename + "</dd><dt>Line</dt><dd>" + error.lineno + "</dd><dt>Column</dt><dd>" + error.colno + "</dd></dl></p>"
+    showGeneralHelp(errorMessage);
+  }
+</script>
+
+<script>
+  var gpgc = {
+    new_comments_disabled: new Boolean(false).valueOf() || new Boolean().valueOf(),
+    site_url: "https://linneakirby.com",
+    page_path: "_posts/2021-03-29-project-iteration-2.md",
+    issue_title: "project iteration 2",
+    repo_id: "linneakirby/canhaplabs",
+    use_show_action: false,
+    github_application_client_id: "f98cedf49e004178e445",
+    github_application_code_authenticator_url: "https://canhaplabs.herokuapp.com/authenticate/",
+    github_application_login_redirect_url: "http://linneakirby.com/canhaplabs/public/html/gpgc_redirect.html",
+    enable_diagnostics: true,
+  };
+
+  gpgc_main();
+</script>
+
+
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        
+        <p class="copyright">canhaplabs maintained by <a href="https://github.com/linneakirby">linneakirby</a></p>
+        
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+  </body>
+</html>

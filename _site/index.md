@@ -4,6 +4,8 @@
 
 ### [Iteration 1]({{ site.baseurl }}{% post_url 2021-03-05-project-iteration-1 %})
 
+### [Iteration 2]({{ site.baseurl }}{% post_url 2021-03-29-project-iteration-2 %})
+
 ## Labs
 
 ### [Lab 1]({{ site.baseurl }}{% post_url 2021-01-29-lab1 %})

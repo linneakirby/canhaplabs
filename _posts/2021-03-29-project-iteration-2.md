@@ -105,7 +105,7 @@ public class ColorPalette{
   
 }
 ```
-_The `ColorPalette` class consists of and array of six `ColorSwatch` objects and is able to add, set, and remove swatches, keeping a default color of black for any undefined swatches._
+_The `ColorPalette` object consists of and array of six `ColorSwatch` objects and is able to add, set, and remove swatches, keeping a default color of black for any undefined swatches._
 
 
 ```java
@@ -175,151 +175,198 @@ public class ColorSwatch{
 }
 ```
 
-_The `ColorSwatch` class consists of a representation of an RGB color and an index in a `ColorPalette` object. It is able to get and set itself in a couple different ways just out of convenience._
+_The `ColorSwatch` object consists of a representation of an RGB color and an index in a `ColorPalette` object. It is able to get and set itself in a couple different ways just out of convenience._
 
-#### Toggling keyboard interactions
+In my opinion, the new and improved color picker feels satisfying to use when in action. I also modified the cursor to change color to match the selected color so the user will not have to look at the bottom of the screen to see the selected color.
 
-I decided to start simple and use keyboard interactions to trigger different events. I used Processing's built-in `KeyPressed()` function to set up my keyboard shortcuts:
+{% include figure image_path="/assets/project-iteration-2/colorPalette.gif" alt="The new color picker." caption="_The color picker in action with multiple palettes._" %}
+
+#### Bugfixes
+
+I went through Preeti's list of bugs and was able to find solutions for all of them.
+
+{% include figure image_path="/assets/project-iteration-2/bugfixes.gif" alt="Bugfixes." caption="_No matter the background color, the brush is still visible. The brush is also able to color all the way to the edge of the walls. The cursor and the brush are now centered and the user is unable to switch between modes when in the button area or when touching a wall._" %}
+
+##### Finding the brush while coloring
+
+I added a multi-layer outline around the brush when in coloring mode along with a multi-layer ring in the middle to indicate the center of the brush. I used black and white for the rings so the brush would show up on both dark and light backgrounds.
+
+##### Coloring up to the edges
+
+I realized that the reason the brush was unable to color all the way to the edge of the walls was because the invisible `FCircle` attached to the Haply was bigger than the brush itself. I modified the code so that the `HVirtualCoupling` representation and the brush representation are always the same size and when one changes size, so does the other.
+
+##### Centering the cursor and brush
+
+For some reason, Processing's `width` and `height` variables give slightly different values than the values `worldWidth` and `worldHeight` variables multiplied by the `pixelsPerCentimeter` variable. The brush was using one set of variables and the cursor was using the other set, so I changed the code so both used one set of variables.
+
+##### No more splotches of color over the lines or in the button area
+
+I modified the code so that the user is unable to switch to coloring mode when in the button area or when touching a wall so there is no more issue of splotches of color going over the lines or appearing in the toolbar.
+
+##### Starting the program with a splotch of color
+
+I changed the starting setup so that the program starts out of coloring mode. This way, the user can choose where to start coloring, pick a color to begin with, and will not have to deal with a rogue splotch of color.
+
+
+#### Adding buttons
+
+I added several "buttons" to the UI in the form of `FBox` objects that, when touched by the cursor, activate certain effects. I also filled in the background of the toolbar with black to distinguish it from the coloring screen.
+
+{% include figure image_path="/assets/project-iteration-2/UItoolbar.png" alt="The toolbar." caption="_My new toolbar._" %}
+
+##### Erase
+
+Because I didn't want to deal with saving user motion, I kept the eraser simple by having it switch the brush color to white. Because the canvas background is white, a white brush appears to "erase."
+
+{% include figure image_path="/assets/project-iteration-2/erasing.gif" alt="Erasing." caption="_Erasing._" %}
+
+##### Previous and Next Palette
+
+The previous and next palette buttons decrement and increment, respectively, a variable called `paletteIndex` which is modded by the number of palettes to get a valid palette index. The palette is obtained from a list of `ColorPalette` objects and loaded into the toolbar.
+
+{% include figure image_path="/assets/project-iteration-2/changePalette.gif" alt="Changing the palette." caption="_Changing the active palette._" %}
+
+##### Smaller and Larger Brush
+
+The smaller and larger brush buttons decrease and increase, respectively, the size of the brush, the `FCircle` attached to the Haply, the sensor halo around the brush, and the cursor. At the moment, the brush changes size very slowly, which can be frustrating for the user. I am currently brainstorming ideas to fix this issue.
+
+{% include figure image_path="/assets/project-iteration-2/smallerLarger.gif" alt="Changing brush size." caption="_Changing the brush size._" %}
+
+##### Save
+
+The save button saves unique .png files of `layers[0]` and `layers[1]` to a subfolder called "saved" in the code's folder each time it is called. Because the filenames are unique, the user can save multiple images each coloring session.
+
+##### Clear
+
+The clear button resets the layers and adds a new white background to the layer `g`.
+
+{% include figure image_path="/assets/project-iteration-2/saveClear.gif" alt="Saving and clearing." caption="_Saving and clearing._" %}
+
+#### Setting up a new and improved brush
+
+In order to create a more nuanced visual painting texture, I needed to set up another set of classes:
+
 
 ```java
-void keyPressed() {
-  if (key == ' ') { // pressing spacebar makes walls flexible
-    if (isDrawingModeEngaged()) {
-      disengageDrawingMode();
-    } else {
-      engageDrawingMode();
+import java.util.ArrayList;
+import processing.core.PGraphics;
+
+public class Brush {
+  private float paintAmount;
+  private int[] paintColor = new int[3];
+  private ArrayList<Bristle> bristles = new ArrayList<Bristle>();
+  private float scaleFactor;
+
+  public Brush() {
+    this(new int[] {0, 0, 0});
+  }
+
+  public Brush(int[] c) {
+    this.paintColor = c;
+    this.paintAmount = 0.0f;
+    this.scaleFactor = 30f;
+  }
+
+  public void changeColor(int[] c) {
+    this.paintColor = c;
+  }
+
+  public int[] getColor() {
+    return this.paintColor;
+  }
+
+  public void setScale(float s) {
+    this.scaleFactor = s;
+  }
+  
+  public float getScale() {
+    return this.scaleFactor;
+  }
+
+  public void addBristle(Bristle b) {
+    this.bristles.add(b);
+  }
+
+  public int numBristles() {
+    return this.bristles.size();
+  }
+
+  public ArrayList<Bristle> getBristles() {
+    return this.bristles;
+  }
+  
+  public void larger(float amount){
+    scaleFactor += amount;
+  }
+  
+  public void smaller(float amount){
+    scaleFactor -= amount;
+    if (scaleFactor < 1f) {
+      scaleFactor = 1f;
     }
   }
-  if (key == 'c' || key == 'C') { // pressing c changes to a random colour
-    setDrawingColor((int)random(255), (int)random(255), (int)random(255));
-  }
-  if (key == 'v' || key == 'V') { // pressing v changes to a random shape
-    shape = (shape + 1) % (NUM_SHAPES);
+
+  public void paint(PGraphics layer, float x, float y) {
+    layer.ellipse(x, y, scaleFactor, scaleFactor);
   }
 }
 ```
-
-I set the spacebar to toggle a coloring mode on and off, 'c' to randomly change the color, and 'v' to swap between a circle and a square brush tip.
-
-#### Indicating mode
-
-To visually indicate which mode the user is in, I wanted to change the wall color to a bright green when coloring mode is disengaged. I used a HashMap to link the internal Wall representation of each wall with the visual FBox representation. When the spacebar is pressed, I loop through the ArrayList of Wall objects, get the FBox representation from the HashMap, and set the color to the desired color (bright green or black depending on what mode is engaged):
+_The `Brush` object contains a collection of `Bristle` objects, is aware of the color it is using, and has a `paint` method._
 
 
 ```java
-void setWallFlexibility(boolean flexibility, int wallColor) {
-  FBox wallInWorld;
-  for (Wall item : wallList) {
-    wallInWorld = wallToWorldList.get(item);
-    wallInWorld.setSensor(flexibility);
-    wallInWorld.setFillColor(wallColor);
-    wallInWorld.setStrokeColor(wallColor);
+public class Bristle {
+  private float weight;
+  private Brush brush;
+  private int[] index = new int[2];
+  private float opacity;
+  private float scaleFactor;
+  private Boolean middleEdge = false;
+  
+  public Bristle(float w, Brush b, int[] coords){
+    this.weight = w;
+    this.brush = b;
+    this.index[0] = coords[0];
+    this.index[1] = coords[1];
+  }
+  
+  public void setMiddleEdge(Boolean b){
+    this.middleEdge = b;
+  }
+  
+  public Boolean isMiddleEdge(){
+    return this.middleEdge;
   }
 }
 ```
+_The `Bristle` object knows where it is in a `Brush` object and has its own weight and opacity._
 
-#### Exploring brush shape and color
-
-I decided to disable Preeti's texture explorations for the moment. I liked the idea of visual texture as part of the brush options, but I thought it would be easier to work with basic shapes as I explored changing the brush color. Instead of attaching images to the HVirtualCoupling itself, I used the `playerToken` position to draw an object of the desired shape at the same position. I created two basic brush options for coloring mode – a circle and a square drawing tool – and a cursor for when coloring mode is disengaged:
-
-
-```java
-void drawCursor(PGraphics layer) {
-  layer.ellipse(playerToken.getAvatarPositionX()*40, playerToken.getAvatarPositionY()*40, 2, 2);
-  world.draw();
-}
-
-void drawCircle(PGraphics layer) {
-  layer.ellipse(playerToken.getAvatarPositionX()*40, playerToken.getAvatarPositionY()*40, 20, 20);
-  world.draw();
-}
-
-void drawSquare(PGraphics layer) {
-  layer.rect(playerToken.getAvatarPositionX()*40-10, playerToken.getAvatarPositionY()*40-10, 20, 20);
-  world.draw();
-}
-```
-
-I also created six color swatches and a color mixer swatch at the bottom right of the screen. I do not want to rely on keyboard shortcuts long term, so I thought it would make more sense for the user to "dip their brush" into "buckets" to add or subtract red, green, and blue. The color mixer swatch updates the mixed color in real time. 
-
-{% include figure image_path="/assets/project-iteration-1/color-swatches.png" alt="My color swatch setup." caption="_Dipping into the desaturated shade will subtract the corresponding color, while dipping into the saturated shade will add the corresponding color. The bar at the bottom shows the currently mixed color._" %}
-
-#### Creating layers
-
-One big issue I ran into was figuring out how to save the coloring trails while not saving the cursor trails. 
-
-{% include figure image_path="/assets/project-iteration-1/cursor-trails.gif" alt="The cursor leaving a trail." caption="_The bane of my existence for two days straight._" %}
-
-While it was relatively simple to figure out how to change colors and place shapes at the `playerToken`'s position, I struggled with helping the program discriminate what to save. I eventually figured out that I needed to create drawing layers! 
-
-##### Processing frustrations: a short aside
-
-One of my biggest frustrations with Processing is that by attempting to simplify programming, the developers have ended up obfuscating some potentially important information. In my case, the obfuscated information was that the default canvas that pixels get recorded to is called `g`! Any time a Processing-specific method such as `background(<color>)` is called, it affects `g`. The secret I learned is that these methods can also affect other layers, so if you have another layer called `topLayer`, then `topLayer.background(<color>)` changes the background of `topLayer` instead of `g`!
-
-##### Layers upon layers
-
-I decided I needed three layers (ordered top to bottom):
-
-1. a layer to display the cursor every time coloring mode is toggled off
-2. a layer to incrementally color on every time coloring mode is toggled on
-3. a layer to white-out and load the accumulated color onto each draw cycle
-
-{% include figure image_path="/assets/project-iteration-1/layer-explanation.png" alt="Drawing the layers." caption="_My attempt at drawing how I set up the layers._" %}
-
-I created an array of layers, with `g` as the 0th layer. Each draw cycle, I set `g`'s background to white so as to remove any cursor trails, and load the image from `layers[1]`, the coloring layer. If coloring mode is toggled on, then the current brush is displayed and the color trail is saved to `layers[1]`. If coloring mode is toggled off, then the cursor is displayed on `layers[2]`:
-
-```java
-
-void createLayers() {
-  layers[0] = g;
-  layers[1] = createGraphics((int)worldWidth*40, (int)worldHeight*40 + 2);
-  layers[2] = createGraphics((int)worldWidth*40, (int)worldHeight*40 + 2);
-}
-
-void draw() {
-  g.background(255);
-  image(layers[1], 0, 0);
-  if (isDrawingModeEngaged()) {
-    layers[1].beginDraw();
-    layers[1].noStroke();
-    int[] c = getDrawingColor();
-    layers[1].fill(color(c[0], c[1], c[2]));
-    drawShape(layers[1]);
-    layers[1].endDraw();
-    image(layers[1], 0, 0);
-  } else {
-    layers[2].beginDraw();
-    layers[2].clear();
-    layers[2].background(0, 0);
-    layers[2].stroke(255, 0, 0);
-    drawCursor(layers[2]);
-    layers[2].endDraw();
-    image(layers[2], 0, 0, width, height);
-  }
-  world.draw();
-}
-```
+My idea is to have a `Brush` object consisting of multiple `Bristles` that will vary in weight and opacity and will eventually "run out" of paint. At the moment, I have set up my classes but have not yet implemented the more nuanced `paint` method. The current `paint` method simply draws a circle at the brush position.
 
 #### Putting it all together
 
-{% include figure image_path="/assets/project-iteration-1/linnea.gif" alt="My interface exploration." caption="_The result of my various explorations._" %}
+{% include figure image_path="/assets/project-iteration-2/screen0.png" alt="Processing art." caption="_A saved coloring image._" %}
 
-My code can be found [here](https://github.com/preetivyas/HaptiColour/tree/lkirby).
+{% include figure image_path="/assets/project-iteration-2/screen1.png" alt="More processing art." caption="_Another saved coloring image._" %}
+
+The code can be found [here](https://github.com/preetivyas/HaptiColour/tree/main/Iteration%202/sketch_coloring_space).
 
 ## Lessons Learned
 
-I think we achieved a significant amount this iteration. I believe Preeti and Marco's explorations have put us in a good spot to begin putting all the pieces of our design together. Furthermore, I think my accomplishments this iteration have laid the groundwork for augmenting our design.
+I think once again we achieved a significant amount this iteration. Preeti's quality assurance testing was particularly useful for me to improve upon what I had achieved in iteration 1.
 
-One of the major lessons I learned this iteration was that sometimes tools that are created in attempts to streamline processes can unintentionally be a hinderance.
+One of the major lessons I learned this iteration was that I am quite good at productive procrastination (ha ha). I was planning on creating the toolbar next iteration, but this iteration I was so nervous about completing the `Brush` class `paint` method that I ended up creating the entire toolbar!
 
-I think the biggest obstacles we have moving forward are keeping our design simple and converging towards pleasing textures to interact with. We will need to explore whether it is more pleasing to have a brush texture interacting with a background texture or to have only one of the two. I do not want to end up with an overload of coloring options and texture sensations. At the same time, I would like to keep as many interactions as possible relegated to the Haply so as to not inundate the user with having to remember too many control options. Our stated goal was to create a tool for mindfulness, anxiety reduction, and fine motor skill training and it is important we do not stray too far from this goal by adding in extraneous options.
+I think the biggest obstacles we have moving forward is making the entire experience feel good. I am currently concerned that the visual aspect of coloring is overshadowing the haptic experience. I believe user testing is key to fully integrating the different modalities and creating one solid experience.
 
 ## Next Iteration Goals
 
 My next iteration goals are to:
 
-1. Implement the interaction of touching the color swatch and changing the mixed color. At the moment, only the random color functionality is implemented.
-2. Re-add in Preeti's idea of texture swatches. My current idea is to have a variety of transparent grayscale texture swatches that can be layered over my basic colorful shape brushes.
-3. Implement "clear" and "erase" functionality. Also perhaps changing brush size.
-4. Explore a "save" functionality. Now that I know how `PGraphics` objects work, I think it should be relatively straightforward to save the image on `layers[1]` to a file.
-5. Begin integrating my interface with what Marco and Preeti have been working on.
+1. Complete the nuanced brush visual coloring texture.
+2. Add a check to make sure the user actually wants to clear instead of automatically clearing.
+3. Make it less frustrating to change the brush size.
+4. Integrate more haptic effects into the experience so the experience feels more like coloring.
+5. Get more feedback from new users to see how we can make the full experience feel calming and pleasant.
+6. Get more quality assurance feedback from Preeti and fix any new bugs that crop up.
+7. Add more "pages" to color on.
